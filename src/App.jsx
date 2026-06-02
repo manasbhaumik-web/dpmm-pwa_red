@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import dpmmLogo from '/logo.png';
-import dpmmTextLogo from '/dpmm-white-text.png';
+const dpmmLogo = `${import.meta.env.BASE_URL}logo.png`;
+const dpmmTextLogo = `${import.meta.env.BASE_URL}dpmm-white-text.png`;
 import { Shield, User, LogOut, Globe } from 'lucide-react';
 import { ToastContainer } from './components/shared/Toast';
 import InstallPrompt from './components/shared/InstallPrompt';

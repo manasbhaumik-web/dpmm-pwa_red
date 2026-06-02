@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import dpmmLogo from '/logo.png';
+const dpmmLogo = `${import.meta.env.BASE_URL}logo.png`;
 import {
   Shield, User, Eye, EyeOff, Lock, Mail, ArrowRight,
   CheckCircle2, AlertCircle, ChevronRight
