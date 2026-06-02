@@ -1,0 +1,1 @@
+    a.download = `SSM_Report_${reportCategory}_${reportStatus}_${reportSector}.csv`;

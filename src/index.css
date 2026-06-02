@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --color-primary:       #263a8d;
+  --color-accent:        #e42b40;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    /* Remove blue tap highlight on Android/iOS */
+    -webkit-tap-highlight-color: transparent;
+    /* Prevent text size adjustment on orientation change (iOS) */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html {
+    /* Smooth momentum scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-700 font-sans antialiased;
+    min-height: 100dvh;
+    /* Prevent pull-to-refresh rubber-band on iOS when not needed */
+    overscroll-behavior-y: contain;
+  }
+
+  /* Form fields font size override */
+  input, select, textarea {
+    font-size: 8pt !important;
+  }
+
+  /* Buttons — touch-action manipulation prevents 300ms delay */
+  button {
+    touch-action: manipulation;
+    cursor: pointer;
+    font-size: 8pt !important;
+  }
+  a, [role="button"] {
+    touch-action: manipulation;
+    cursor: pointer;
+    font-size: 8pt !important;
+  }
+
+  /* Custom scrollbar (desktop only) */
+  @media (pointer: fine) {
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { @apply bg-slate-50; }
+    ::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full; }
+  }
+}
+
+@layer components {
+  /* ── Floating label inputs ── */
+  .float-group { @apply relative; }
+  .float-input {
+    @apply w-full bg-white border border-slate-200 rounded-xl px-4 pt-6 pb-2
+           text-slate-800 placeholder-transparent shadow-sm
+           focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary
+           transition-all duration-200;
+    /* iOS: prevent zoom — override the global 16px reset with Tailwind */
+    font-size: 16px;
+  }
+  .float-label {
+    @apply absolute left-4 top-4 text-slate-400 text-sm pointer-events-none
+           transition-all duration-200 origin-left;
+  }
+  .float-input:focus + .float-label,
+  .float-input:not(:placeholder-shown) + .float-label {
+    @apply top-2 text-xs text-primary scale-90;
+  }
+
+  /* ── Cards ── */
+  .card { @apply bg-white rounded-2xl border border-slate-200 shadow-sm; }
+  .card-hover { @apply card transition-all duration-200 hover:border-slate-300 hover:shadow-md; }
+
+  /* ── Buttons — Compact Size ── */
+  .btn-primary {
+    @apply bg-accent hover:bg-accent/80 active:bg-accent/90 text-white font-semibold rounded-lg px-4 py-2 text-[8pt]
+           transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm;
+    min-height: 32px;
+    touch-action: manipulation;
+  }
+  .btn-secondary {
+    @apply bg-primary hover:bg-primary/80 active:bg-primary/90 text-white font-medium rounded-lg px-4 py-2 text-[8pt]
+           transition-all duration-200 active:scale-95 shadow-sm;
+    min-height: 32px;
+    touch-action: manipulation;
+  }
+  .btn-danger {
+    @apply bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-500 font-medium rounded-lg px-4 py-2 text-[8pt]
+           transition-all duration-200 active:scale-95;
+    min-height: 32px;
+    touch-action: manipulation;
+  }
+  .btn-success {
+    @apply bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-500 font-medium rounded-lg px-4 py-2 text-[8pt]
+           transition-all duration-200 active:scale-95;
+    min-height: 32px;
+    touch-action: manipulation;
+  }
+
+  /* ── Status badges ── */
+  .badge-active  { @apply bg-emerald-50 text-emerald-600 border border-emerald-200/60 text-xs font-semibold px-2.5 py-1 rounded-full; }
+  .badge-pending { @apply bg-accent/10 text-accent border border-accent/30 text-xs font-semibold px-2.5 py-1 rounded-full; }
+  .badge-lapsed  { @apply bg-rose-50    text-rose-600    border border-rose-200/60    text-xs font-semibold px-2.5 py-1 rounded-full; }
+
+  /* ── Glass card ── */
+  .glass {
+    @apply bg-white/90 backdrop-blur-md border border-slate-200 rounded-2xl shadow-sm;
+  }
+
+  /* ── Safe area padding (notch / Dynamic Island / home bar) ── */
+  .safe-top    { padding-top:    env(safe-area-inset-top, 0px); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .safe-left   { padding-left:   env(safe-area-inset-left, 0px); }
+  .safe-right  { padding-right:  env(safe-area-inset-right, 0px); }
+  .safe-x      { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+
+  /* Bottom nav bar — sits above the iOS home bar */
+  .bottom-nav {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #263a8d, #e42b40);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, #f8f9fc 0%, #e9edf5 100%);
+  }
+  .scrollbar-thin { scrollbar-width: thin; }
+  /* Momentum-scrolling containers */
+  .scroll-touch { -webkit-overflow-scrolling: touch; }
+}

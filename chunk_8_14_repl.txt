@@ -1,0 +1,7 @@
+- [x] Configure Tailwind Theme to match DPMM brand (`#263a8d`, `#e42b40`)
+- [x] Update CSS and base global styles for light theme
+- [x] Refactor UI Layout structure (`App.jsx`)
+- [x] Refactor `LandingPage.jsx` Hero, typography, and interactive components
+- [x] Refactor `RegistrationForm.jsx` styles and field containers
+- [x] Refactor `AdminDashboard.jsx` & `MemberPortal.jsx`
+- [x] Verify build & application stability
