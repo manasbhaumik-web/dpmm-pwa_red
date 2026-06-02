@@ -1,3 +1,0 @@
-
----MATCH---
-"python -c \"\nimport json\nwith open('mods.json', 'r', encoding='utf-8') as f:\n    mods = json.load(f)\n\nfor mod in mods:\n    if mod['name'] == 'multi_replace_file_content' and 'AdminDashboard.jsx' in str(mod):\n        chunks = mod.get('args', {}).get('ReplacementChunks', [])\n        for i, chunk in enumerate(chunks):\n            content = chunk.get('ReplacementContent', '')\n            if 'return (' in content or 'return(' in content or 'triggerSimulatedWebhook' in content:\n                print(f'FOUND chunk {i} with size {len(content)} in multi_replace!')\n                with open(f'chunk_{i}.txt', 'w', encoding='utf-8') as out:\n                    out.write(content)\n\""
