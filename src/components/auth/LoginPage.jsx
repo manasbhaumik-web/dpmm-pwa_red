@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import dpmmLogo from '/logo.png';
 import {
   Shield, User, Eye, EyeOff, Lock, Mail, ArrowRight,
   CheckCircle2, AlertCircle, ChevronRight
@@ -100,7 +101,7 @@ export default function LoginPage({ defaultRole = 'admin', onLoginSuccess, onBac
         {/* Logo + heading */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl shadow-xl shadow-slate-200/50 mb-5 overflow-hidden bg-white border border-slate-100 p-2">
-            <img src="/logo.png" alt="DPMM Logo" className="w-full h-full object-contain" />
+            <img src={dpmmLogo} alt="DPMM Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900" style={{ fontFamily: 'var(--font-display, "Playfair Display", serif)' }}>Welcome Back</h1>
           <p className="text-sm text-slate-500 mt-1 font-medium">Sign in to your DPMM Association account</p>

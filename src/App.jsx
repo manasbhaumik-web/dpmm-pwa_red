@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import dpmmLogo from '/logo.png';
+import dpmmTextLogo from '/dpmm-white-text.png';
 import { Shield, User, LogOut, Globe } from 'lucide-react';
 import { ToastContainer } from './components/shared/Toast';
 import InstallPrompt from './components/shared/InstallPrompt';
@@ -119,10 +121,10 @@ export default function App() {
 
           {/* DPMM Logo — text version on dark navy header */}
           <div className="flex items-center gap-3 shrink-0">
-            <img 
-              src="https://dpmm.org.my/wp-content/themes/dpmm-theme/assets/images/dpmm-white-text.png" 
-              alt="DPMM Text"
-              className="h-10 sm:h-14 object-contain"
+            <img
+              src={dpmmTextLogo}
+              alt="DPMM Text Logo"
+              className="h-10 sm:h-14 object-contain drop-shadow-md"
             />
           </div>
 
@@ -304,7 +306,7 @@ export default function App() {
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="DPMM" className="w-5 h-5 object-contain opacity-80" />
+            <img src={dpmmLogo} alt="DPMM" className="w-5 h-5 object-contain opacity-80" />
             <p className="text-[11px] text-white/60">© 2026 Dewan Perniagaan Melayu Malaysia (DPMM) · Hak Cipta Terpelihara</p>
           </div>
           <p className="text-[11px] text-white/40">Sistem v2.0.0 · Dibina dengan React + Tailwind CSS</p>
