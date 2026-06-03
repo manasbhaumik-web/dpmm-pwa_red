@@ -31,21 +31,21 @@
     overscroll-behavior-y: contain;
   }
 
-  /* Form fields font size override */
+  /* Form fields font size - 16px is the iOS Safari threshold to prevent auto-zoom */
   input, select, textarea {
-    font-size: 8pt !important;
+    font-size: 16px;
   }
 
-  /* Buttons — touch-action manipulation prevents 300ms delay */
-  button {
+  /* Buttons & links base */
+  button, a, [role="button"] {
     touch-action: manipulation;
     cursor: pointer;
-    font-size: 8pt !important;
   }
-  a, [role="button"] {
-    touch-action: manipulation;
-    cursor: pointer;
-    font-size: 8pt !important;
+
+  /* Disable text selection on interactive elements to prevent accidental double-tap selection on mobile */
+  button, nav, [role="button"], .badge-active, .badge-pending, .badge-lapsed {
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   /* Custom scrollbar (desktop only) */
@@ -80,29 +80,41 @@
   .card { @apply bg-white rounded-2xl border border-slate-200 shadow-sm; }
   .card-hover { @apply card transition-all duration-200 hover:border-slate-300 hover:shadow-md; }
 
-  /* ── Buttons — Compact Size ── */
+  /* ── Buttons ── */
   .btn-primary {
-    @apply bg-accent hover:bg-accent/80 active:bg-accent/90 text-white font-semibold rounded-lg px-4 py-2 text-[8pt]
+    @apply bg-accent hover:bg-accent/80 active:bg-accent/90 text-white font-semibold rounded-lg px-4 py-2 text-xs md:text-sm
            transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm;
-    min-height: 32px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     touch-action: manipulation;
   }
   .btn-secondary {
-    @apply bg-primary hover:bg-primary/80 active:bg-primary/90 text-white font-medium rounded-lg px-4 py-2 text-[8pt]
+    @apply bg-primary hover:bg-primary/80 active:bg-primary/90 text-white font-medium rounded-lg px-4 py-2 text-xs md:text-sm
            transition-all duration-200 active:scale-95 shadow-sm;
-    min-height: 32px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     touch-action: manipulation;
   }
   .btn-danger {
-    @apply bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-500 font-medium rounded-lg px-4 py-2 text-[8pt]
+    @apply bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-500 font-medium rounded-lg px-4 py-2 text-xs md:text-sm
            transition-all duration-200 active:scale-95;
-    min-height: 32px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     touch-action: manipulation;
   }
   .btn-success {
-    @apply bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-500 font-medium rounded-lg px-4 py-2 text-[8pt]
+    @apply bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-500 font-medium rounded-lg px-4 py-2 text-xs md:text-sm
            transition-all duration-200 active:scale-95;
-    min-height: 32px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     touch-action: manipulation;
   }
 

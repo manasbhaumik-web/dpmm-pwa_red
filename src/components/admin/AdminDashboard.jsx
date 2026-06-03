@@ -11,8 +11,14 @@ import { read, utils } from 'xlsx';
 const STATUS_FILTERS = ['All', 'Active', 'Pending', 'Lapsed'];
 
 function KPICard({ icon: Icon, label, value, sub, color }) {
+  let borderClass = "border-l-4 border-primary";
+  if (color) {
+    if (color.includes("emerald")) borderClass = "border-l-4 border-emerald-500";
+    else if (color.includes("amber")) borderClass = "border-l-4 border-amber-500";
+    else if (color.includes("accent") || color.includes("rose")) borderClass = "border-l-4 border-accent";
+  }
   return (
-    <div className="card p-5 flex items-start gap-4">
+    <div className={`card p-5 flex items-start gap-4 ${borderClass}`}>
       <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-primary-dark text-white">
         <Icon className="w-6 h-6" />
       </div>
@@ -72,7 +78,7 @@ function DocModal({ doc, onClose }) {
         </div>
         <div className="px-5 py-4 flex justify-between items-center border-t border-slate-100 bg-slate-50/50">
           <span className="text-[10px] text-slate-450 font-bold uppercase">SSL Verified Link</span>
-          <button className="bg-slate-900 hover:bg-slate-800 text-white text-[10px] font-bold px-4 py-2 rounded-lg flex items-center gap-1">
+          <button className="bg-primary hover:bg-primary-dark text-white text-[10px] font-bold px-4 py-2 rounded-lg flex items-center gap-1">
             <Download className="w-3 h-3" /> Download Attachment
           </button>
         </div>
@@ -110,7 +116,7 @@ function PendingCard({ applicant, onApprove }) {
         </button>
 
         {open && (
-          <div className="border-t border-slate-100 p-4 bg-slate-50/30 space-y-4 animate-fade-in">
+          <div className="border-t border-slate-100 p-4 pb-8 bg-slate-50/30 space-y-4 animate-fade-in">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-slate-400 shrink-0" />
@@ -201,7 +207,7 @@ function WelcomeCredentialsModal({ credentials, onClose }) {
 
         <button
           onClick={onClose}
-          className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-1.5 rounded-xl uppercase tracking-wider transition-all duration-200 active:scale-95"
+          className="w-full bg-accent hover:bg-accent-dark text-white text-xs font-bold py-1.5 rounded-xl uppercase tracking-wider transition-all duration-200 active:scale-95"
           style={{ minHeight: '40px' }}
         >
           Confirm Approval
@@ -1014,40 +1020,21 @@ export default function AdminDashboard({ onToast }) {
       {showAddModal && <AddMemberModal onClose={() => setShowAddModal(false)} onSave={handleAddNewMember} />}
       {showBulkUpload && <BulkUploadModal onClose={() => setShowBulkUpload(false)} onImport={handleBulkImport} />}
 
-      {/* ── BACKGROUND SYSTEM HEALTH INDICATORS ────────────────────────────────────────── */}
-      <section className="bg-slate-900 border border-slate-800 rounded-2xl p-4.5 text-white flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary/90/10 border border-primary/20 rounded-xl flex items-center justify-center">
-            <Activity className="w-5 h-5 text-indigo-400 animate-pulse" />
-          </div>
-          <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Sync Automation Status</p>
-            <p className="text-xs font-bold text-slate-200">Supabase Cloud Engine Connection: Active</p>
-          </div>
+      {/* ── DEMONSTRATION PURPOSE ONLY ── */}
+      <section className="bg-amber-50 border border-amber-250 rounded-2xl p-4.5 flex items-center gap-3 animate-fade-in">
+        <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center shrink-0 border border-amber-200">
+          <AlertTriangle className="w-5 h-5 text-amber-600" />
         </div>
-
-        <div className="flex gap-4 flex-wrap text-center md:text-left">
-          <div className="bg-slate-800 border border-slate-700/80 rounded-xl px-4 py-2">
-            <p className="text-[9px] text-slate-400 uppercase font-bold">RLS Rules</p>
-            <p className="text-xs font-bold text-emerald-400 mt-0.5 flex items-center gap-1">
-              <Shield className="w-3.5 h-3.5" /> Gated Security
-            </p>
-          </div>
-          <div className="bg-slate-800 border border-slate-700/80 rounded-xl px-4 py-2">
-            <p className="text-[9px] text-slate-400 uppercase font-bold">Postgres Rows</p>
-            <p className="text-xs font-bold text-indigo-300 mt-0.5 font-mono">{membersList.length} Members</p>
-          </div>
-          <div className="bg-slate-800 border border-slate-700/80 rounded-xl px-4 py-2">
-            <p className="text-[9px] text-slate-400 uppercase font-bold">Webhook Listener</p>
-            <p className="text-xs font-bold text-sky-400 mt-0.5 flex items-center justify-center md:justify-start gap-1 font-mono">
-              <RefreshCw className="w-3.5 h-3.5 animate-spin-slow" /> :443 Live
-            </p>
-          </div>
+        <div>
+          <p className="text-xs sm:text-sm font-bold text-amber-800">Demonstration Purpose Only</p>
+          <p className="text-[11px] text-amber-650 mt-0.5 leading-relaxed font-medium">
+            This admin workspace simulates an active database registry. All actions, data synchronization, and imports are executed locally for mockup demonstration.
+          </p>
         </div>
       </section>
 
       {/* Tab Switcher */}
-      <div className="flex gap-1 bg-slate-100 border border-slate-200 rounded-xl p-1">
+      <div className="flex gap-1.5 bg-slate-100 border border-slate-200 rounded-xl p-1 overflow-x-auto whitespace-nowrap scrollbar-thin shadow-inner">
         {[
           { id: 'dashboard', label: 'Management Dashboard', icon: Shield },
           { id: 'ledger', label: 'Financial Ledger & Override', icon: DollarSign },
@@ -1059,11 +1046,11 @@ export default function AdminDashboard({ onToast }) {
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
-                ${active ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-slate-700'}`}
-              style={{ minHeight: '32px' }}
+              className={`flex-1 min-w-[180px] sm:min-w-0 shrink-0 flex items-center justify-center gap-2 py-1.5 px-3 rounded-lg text-xs font-bold transition-all duration-200
+                ${active ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary hover:bg-slate-50'}`}
+              style={{ minHeight: '38px' }}
             >
-              <Icon className="w-5 h-5" />
+              <Icon className="w-4 h-4 shrink-0" />
               {t.label}
             </button>
           );
@@ -1072,8 +1059,8 @@ export default function AdminDashboard({ onToast }) {
 
       {activeTab === 'dashboard' && (
         <>
-          {/* KPI Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {/* flex-col on mobile, grid on desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <KPICard icon={Users}      label="Total Members"        value={membersList.length} sub="As of AGM 2026" color="bg-primary/5 text-primary" />
             <KPICard icon={UserCheck}  label="Active (Active)"       value={activeCount}    sub="Paid up"        color="bg-emerald-50 text-emerald-600" />
             <KPICard icon={Clock}      label="Pending Verification" value={pendingCount}   sub="Awaiting review" color="bg-amber-50 text-amber-600" />
@@ -1105,7 +1092,7 @@ export default function AdminDashboard({ onToast }) {
                 <div className="flex gap-2 sm:ml-auto">
                   <button
                     onClick={() => setShowBulkUpload(true)}
-                    className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all duration-200 active:scale-95 shadow-sm"
+                    className="flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all duration-200 active:scale-95 shadow-sm"
                   >
                     <Upload className="w-4 h-4" /> Bulk Upload
                   </button>
@@ -1143,7 +1130,7 @@ export default function AdminDashboard({ onToast }) {
                     onClick={() => setFilter(f)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all border
                       ${filter === f
-                        ? 'bg-slate-900 border-slate-900 text-white shadow-sm'
+                        ? 'bg-accent border-accent text-white shadow-sm hover:bg-accent-dark hover:border-accent-dark'
                         : 'bg-white border-slate-200 text-slate-550 hover:border-slate-350'}`}
                   >
                     {f} {f === 'All' ? `(${allRecords.length})` : f === 'Active' ? `(${activeCount})` : f === 'Lapsed' ? `(${membersList.filter(m=>m.status==='Lapsed').length})` : `(${pendingCount})`}
@@ -1152,18 +1139,18 @@ export default function AdminDashboard({ onToast }) {
               </div>
 
               {/* Registry Table */}
-              <div className="card overflow-hidden bg-white border border-slate-200">
+              <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-primary">
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="border-b border-slate-200 bg-slate-50/50">
-                        <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Member No.</th>
-                        <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Company Name</th>
-                        <th className="text-left px-4 py-1.5 text-slate-450 font-semibold hidden sm:table-cell">SSM No</th>
-                        <th className="text-left px-4 py-1.5 text-slate-450 font-semibold hidden lg:table-cell">State</th>
-                        <th className="text-left px-4 py-1.5 text-slate-450 font-semibold hidden md:table-cell">Rep Contact</th>
-                        <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Status</th>
-                        <th className="text-right px-4 py-1.5 text-slate-450 font-semibold">Actions</th>
+                      <tr className="border-b border-slate-200 bg-primary/5 text-primary font-bold">
+                        <th className="text-left px-4 py-1.5 font-semibold">Member No.</th>
+                        <th className="text-left px-4 py-1.5 font-semibold">Company Name</th>
+                        <th className="text-left px-4 py-1.5 font-semibold hidden sm:table-cell">SSM No</th>
+                        <th className="text-left px-4 py-1.5 font-semibold hidden lg:table-cell">State</th>
+                        <th className="text-left px-4 py-1.5 font-semibold hidden md:table-cell">Rep Contact</th>
+                        <th className="text-left px-4 py-1.5 font-semibold">Status</th>
+                        <th className="text-right px-4 py-1.5 font-semibold">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1223,7 +1210,7 @@ export default function AdminDashboard({ onToast }) {
           
           {/* Offline Override Facility Form */}
           <div className="xl:col-span-2 space-y-4">
-            <div className="card p-5 space-y-4">
+            <div className="card p-5 space-y-4 border-t-2 border-t-accent">
               <div>
                 <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
                   <DollarSign className="w-4.5 h-4.5 text-primary/80" /> Offline Payment Override
@@ -1300,10 +1287,10 @@ export default function AdminDashboard({ onToast }) {
             </div>
 
             {/* Simulated Webhook Trigger Console */}
-            <div className="card p-5 bg-slate-900 border border-slate-800 text-white space-y-4">
+            <div className="card p-5 bg-slate-900 border border-slate-800 text-white space-y-4 border-t-2 border-t-accent">
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-indigo-400 flex items-center gap-2 uppercase tracking-wider">
+                  <h3 className="text-xs font-bold text-accent flex items-center gap-2 uppercase tracking-wider">
                     <Database className="w-4.5 h-4.5" /> Webhook Gateway Simulator
                   </h3>
                   <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-[9px] font-bold rounded-full border border-emerald-500/30 font-mono">LISTENING</span>
@@ -1353,7 +1340,7 @@ export default function AdminDashboard({ onToast }) {
                 <button
                   onClick={triggerSimulatedWebhook}
                   disabled={webhookProcessing}
-                  className="w-full bg-primary/90 hover:bg-indigo-400 disabled:opacity-40 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-indigo-500/10"
+                  className="w-full bg-primary/90 hover:bg-primary disabled:opacity-40 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-primary/10"
                   style={{ minHeight: '38px' }}
                 >
                   {webhookProcessing ? (
@@ -1374,17 +1361,17 @@ export default function AdminDashboard({ onToast }) {
           <div className="xl:col-span-3 space-y-3">
             <h2 className="text-sm font-semibold text-slate-800">Financial Ledger logs ({paymentsList.length} records)</h2>
             
-            <div className="card overflow-hidden bg-white border border-slate-200">
+            <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-primary">
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 bg-slate-50/50">
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Payment ID</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Member</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Year</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Date</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Transaction ID</th>
-                      <th className="text-right px-4 py-1.5 text-slate-450 font-semibold">Amount RM</th>
+                    <tr className="border-b border-slate-200 bg-primary/5 text-primary font-bold">
+                      <th className="text-left px-4 py-1.5 font-semibold">Payment ID</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Member</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Year</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Date</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Transaction ID</th>
+                      <th className="text-right px-4 py-1.5 font-semibold">Amount RM</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1417,8 +1404,8 @@ export default function AdminDashboard({ onToast }) {
       {activeTab === 'reports' && (
         <div className="space-y-6 animate-fade-in">
           {/* Report Title & Header */}
-          <div className="card p-5 relative overflow-hidden bg-white border border-slate-200">
-            <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at top right, #6366f1, transparent 70%)' }} />
+          <div className="card p-5 relative overflow-hidden bg-white border border-slate-200 border-t-2 border-t-accent">
+            <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at top right, #e42b40, transparent 70%)' }} />
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h2 className="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
@@ -1430,7 +1417,7 @@ export default function AdminDashboard({ onToast }) {
                 <button
                   onClick={handleExportReport}
                   disabled={reportFiltered.length === 0}
-                  className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95"
+                  className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95"
                   style={{ minHeight: '38px' }}
                 >
                   <Download className="w-4 h-4" /> Export CSV ({reportFiltered.length})
@@ -1448,7 +1435,7 @@ export default function AdminDashboard({ onToast }) {
           </div>
 
           {/* Interactive Filters Grid */}
-          <div className="card p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white border border-slate-200">
+          <div className="card p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white border border-slate-200 border-t-2 border-t-primary">
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-slate-450 uppercase tracking-wide flex items-center gap-1">
                 <Filter className="w-3.5 h-3.5 text-slate-400" /> Category
@@ -1500,7 +1487,7 @@ export default function AdminDashboard({ onToast }) {
           </div>
 
           {/* Report KPIs */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <KPICard icon={Users}      label="Matched Members"      value={reportStats.total} sub="Matching filters" color="bg-primary/5 text-primary" />
             <KPICard icon={DollarSign} label="Revenue Collected"    value={`RM ${reportStats.fees.toLocaleString()}`} sub="From matching payments" color="bg-emerald-50 text-emerald-600" />
             <KPICard icon={Clock}      label="Outstanding Dues"     value={`RM ${reportStats.outstanding.toLocaleString()}`} sub="Remaining outstanding" color="bg-rose-50 text-rose-600" />
@@ -1511,7 +1498,7 @@ export default function AdminDashboard({ onToast }) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             
             {/* Category distribution */}
-            <div className="card p-5 space-y-4 bg-white border border-slate-200">
+            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-primary">
               <h3 className="text-xs font-bold text-slate-850 uppercase tracking-wide flex items-center gap-2">
                 <PieChart className="w-4 h-4 text-primary/80" /> Category Distribution
               </h3>
@@ -1536,7 +1523,7 @@ export default function AdminDashboard({ onToast }) {
             </div>
 
             {/* Sector representation */}
-            <div className="card p-5 space-y-4 bg-white border border-slate-200">
+            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-primary">
               <h3 className="text-xs font-bold text-slate-850 uppercase tracking-wide flex items-center gap-2">
                 <Briefcase className="w-4 h-4 text-primary/80" /> Top Industry Representation
               </h3>
@@ -1563,7 +1550,7 @@ export default function AdminDashboard({ onToast }) {
             </div>
 
             {/* SQL DDL Schema Viewer */}
-            <div className="card p-5 space-y-4 bg-white border border-slate-200">
+            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-accent">
               <h3 className="text-xs font-bold text-slate-850 uppercase tracking-wide flex items-center gap-2">
                 <Database className="w-4.5 h-4.5 text-primary/80" /> Supabase Database Schema Console
               </h3>
@@ -1608,17 +1595,17 @@ export default function AdminDashboard({ onToast }) {
           {/* Filtered List Preview */}
           <div className="space-y-3">
             <h3 className="text-xs font-bold text-slate-550 uppercase tracking-wide">Matching Records Preview ({reportFiltered.length})</h3>
-            <div className="card overflow-hidden bg-white border border-slate-200">
+            <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-primary">
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 bg-slate-50/50">
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Member No.</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Company Name</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Sector</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Category</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Contact Person</th>
-                      <th className="text-left px-4 py-1.5 text-slate-450 font-semibold">Status</th>
+                    <tr className="border-b border-slate-200 bg-primary/5 text-primary font-bold">
+                      <th className="text-left px-4 py-1.5 font-semibold">Member No.</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Company Name</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Sector</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Category</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Contact Person</th>
+                      <th className="text-left px-4 py-1.5 font-semibold">Status</th>
                     </tr>
                   </thead>
                   <tbody>

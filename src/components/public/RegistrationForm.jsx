@@ -23,15 +23,17 @@ function FloatInput({ label, value, onChange, type = 'text', prefix, readOnly, c
             {prefix}
           </span>
         )}
-        <input
-          type={type}
-          value={value}
-          onChange={e => onChange && onChange(e.target.value)}
-          readOnly={readOnly}
-          placeholder=" "
-          className={`float-input ${prefix ? 'rounded-l-none' : ''} ${readOnly ? 'opacity-70 cursor-default' : ''}`}
-        />
-        <label className="float-label">{label}</label>
+        <div className="relative flex-1">
+          <input
+            type={type}
+            value={value}
+            onChange={e => onChange && onChange(e.target.value)}
+            readOnly={readOnly}
+            placeholder=" "
+            className={`float-input ${prefix ? 'rounded-l-none' : ''} ${readOnly ? 'opacity-70 cursor-default' : ''}`}
+          />
+          <label className="float-label">{label}</label>
+        </div>
       </div>
     </div>
   );
@@ -302,7 +304,7 @@ export default function RegistrationForm({ onToast, onCancel }) {
       <div className="flex justify-between mt-4 gap-3">
         <button
           onClick={() => step === 0 ? onCancel && onCancel() : setStep(s => s - 1)}
-          className="btn-secondary flex items-center gap-2 text-sm"
+          className="btn-secondary h-11 flex items-center gap-2 text-sm"
         >
           <ChevronLeft className="w-4 h-4" /> {step === 0 ? 'Cancel' : 'Back'}
         </button>
@@ -310,7 +312,7 @@ export default function RegistrationForm({ onToast, onCancel }) {
           <button
             onClick={() => setStep(s => s + 1)}
             disabled={!canNext()}
-            className="btn-primary flex items-center gap-2 text-sm"
+            className="btn-primary h-11 flex items-center gap-2 text-sm"
           >
             Continue <ChevronRight className="w-4 h-4" />
           </button>
@@ -318,7 +320,7 @@ export default function RegistrationForm({ onToast, onCancel }) {
           <button
             onClick={handleSubmit}
             disabled={!canNext()}
-            className="btn-primary flex items-center gap-2 text-sm bg-emerald-600 hover:bg-emerald-500"
+            className="btn-primary h-11 flex items-center gap-2 text-sm bg-emerald-600 hover:bg-emerald-500"
           >
             <CheckSquare className="w-4 h-4" /> Submit Application
           </button>

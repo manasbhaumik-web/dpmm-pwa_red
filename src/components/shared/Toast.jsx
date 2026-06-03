@@ -29,7 +29,7 @@ export function Toast({ toast, onDismiss }) {
 
 export function ToastContainer({ toasts, onDismiss }) {
   return (
-    <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none">
+    <div className="fixed top-4 md:top-6 inset-x-4 md:left-auto md:right-6 z-[9999] flex flex-col items-center md:items-end gap-2 pointer-events-none">
       {toasts.map(t => (
         <Toast key={t.id} toast={t} onDismiss={onDismiss} />
       ))}

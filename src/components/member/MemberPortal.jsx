@@ -92,7 +92,7 @@ function B2BTab({ memberStatus, memberState, memberId }) {
             key={s}
             onClick={() => setSector(s)}
             className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-200 shrink-0
-              ${sector === s ? 'bg-primary border-primary text-white shadow-sm' : 'bg-white border-slate-200 text-slate-550 hover:border-slate-350'}`}
+              ${sector === s ? 'bg-accent border-accent text-white shadow-sm hover:bg-accent-dark hover:border-accent-dark' : 'bg-white border-slate-200 text-slate-550 hover:border-slate-350'}`}
           >
             {s}
           </button>
@@ -174,7 +174,7 @@ function ReceiptPdfModal({ receipt, onClose }) {
         <div className="mt-5 flex gap-3">
           <button
             onClick={() => window.print()}
-            className="flex-1 bg-slate-900 hover:bg-slate-850 text-white text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-2"
+            className="flex-1 bg-accent hover:bg-accent-dark text-white text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-2"
           >
             <Printer className="w-4 h-4" /> Print Receipt
           </button>
@@ -334,57 +334,24 @@ export default function MemberPortal({ onToast }) {
       <PaymentModal isOpen={showPayment} onClose={() => setShowPayment(false)} onSuccess={handlePaySuccess} />
       <ReceiptPdfModal receipt={selectedReceipt} onClose={() => setSelectedReceipt(null)} />
 
-      {/* ── T-INTERVAL SIMULATOR CONTROLS BAR ────────────────────────────────────── */}
-      <div className="bg-slate-100 border border-slate-200 rounded-2xl p-4 mb-4 flex flex-col md:flex-row items-center justify-between gap-3">
-        <div>
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Developer Sandbox Tools</p>
-          <p className="text-xs font-bold text-slate-800">T-Interval Alert Banner Simulator</p>
+      {/* ── DEMONSTRATION PURPOSE ONLY ── */}
+      <div className="bg-amber-50 border border-amber-250 rounded-2xl p-4 mb-4 flex items-center gap-3">
+        <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center shrink-0 border border-amber-200">
+          <AlertTriangle className="w-5 h-5 text-amber-600" />
         </div>
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => {
-              setMember(m => ({ ...m, status: 'Active', expiresDays: 30 }));
-              onToast({ type: 'info', title: 'T-30 Alert Active', message: 'Simulating context banner at T-30 days before expiration.' });
-            }}
-            className="px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-[10px] font-bold rounded-lg transition-all"
-          >
-            Set T-30 Warning
-          </button>
-          <button
-            onClick={() => {
-              setMember(m => ({ ...m, status: 'Active', expiresDays: 14 }));
-              onToast({ type: 'info', title: 'T-14 Alert Active', message: 'Simulating context banner at T-14 days before expiration.' });
-            }}
-            className="px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-[10px] font-bold rounded-lg transition-all"
-          >
-            Set T-14 Warning
-          </button>
-          <button
-            onClick={() => {
-              setMember(m => ({ ...m, status: 'Lapsed', expiresDays: 0 }));
-              onToast({ type: 'info', title: 'Account Expired (T-0)', message: 'Simulating lapsed membership state (restricted access).' });
-            }}
-            className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-250 text-amber-700 text-[10px] font-bold rounded-lg transition-all"
-          >
-            Set T-0 Expired
-          </button>
-          <button
-            onClick={() => {
-              setMember(m => ({ ...m, status: 'Active', expiresDays: 365 }));
-              onToast({ type: 'info', title: 'Account Fully Active', message: 'Simulating fresh active account. Banner dismissed.' });
-            }}
-            className="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 border border-primary/30 text-primary/90 text-[10px] font-bold rounded-lg transition-all"
-          >
-            Set Fully Active (T-365)
-          </button>
+        <div>
+          <p className="text-xs font-bold text-amber-800">Demonstration Purpose Only</p>
+          <p className="text-[11px] text-amber-650 mt-0.5 leading-relaxed font-medium">
+            This portal showcases the member workspace. Interactive actions such as uploads, profile updates, and billing simulations occur locally within the browser context.
+          </p>
         </div>
       </div>
 
       <div className="space-y-5">
         
         {/* Profile overview card */}
-        <div className="card p-5 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at top right, #4f46e5, transparent 70%)' }} />
+        <div className="card p-5 relative overflow-hidden border-t-2 border-t-accent">
+          <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at top right, #e42b40, transparent 70%)' }} />
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/90 rounded-2xl flex items-center justify-center text-white text-xl font-bold shrink-0">
               {member.company.charAt(0)}
@@ -441,7 +408,7 @@ export default function MemberPortal({ onToast }) {
 
         {/* Lapsed Warning Banner (T-0) */}
         {showLapsedBanner && (
-          <div className="bg-rose-50 border border-rose-250 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-3 animate-fade-in">
+          <div className="bg-rose-50 border border-rose-250 border-l-4 border-l-accent rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-3 animate-fade-in">
             <div className="flex items-start sm:items-center gap-3 flex-1">
               <Lock className="w-5 h-5 text-rose-600 shrink-0 mt-0.5 sm:mt-0" />
               <div>
@@ -455,7 +422,7 @@ export default function MemberPortal({ onToast }) {
             </div>
             <button
               onClick={() => setShowPayment(true)}
-              className="flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-5 py-1.5 rounded-xl transition-all duration-200 active:scale-95 shrink-0"
+              className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white text-xs font-bold px-5 py-1.5 rounded-xl transition-all duration-200 active:scale-95 shrink-0"
               style={{ minHeight: '36px' }}
             >
               Pay Dues RM 100 <ChevronRight className="w-4 h-4" />
@@ -464,7 +431,7 @@ export default function MemberPortal({ onToast }) {
         )}
 
         {/* Tabs Selection Bar */}
-        <div className="flex p-1 bg-slate-100 border border-slate-200 rounded-xl overflow-hidden shadow-inner">
+        <div className="flex p-1 bg-slate-100 border border-slate-200 rounded-xl overflow-x-auto whitespace-nowrap scrollbar-thin shadow-inner gap-1">
           {[
             { id: 'overview', label: 'Overview' },
             { id: 'profile',  label: 'Corporate Profile' },
@@ -474,8 +441,8 @@ export default function MemberPortal({ onToast }) {
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
-                ${activeTab === t.id ? 'bg-white text-primary shadow-sm ring-1 ring-slate-200/50' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
+              className={`flex-1 min-w-[100px] shrink-0 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
+                ${activeTab === t.id ? 'bg-primary text-white shadow-sm' : 'text-slate-500 hover:text-primary hover:bg-slate-50/50'}`}
               style={{ minHeight: '38px' }}
             >
               {t.label}
@@ -488,7 +455,7 @@ export default function MemberPortal({ onToast }) {
           <div className="animate-fade-in grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             {/* Membership Details */}
-            <div className="card p-5 space-y-4">
+            <div className="card p-5 space-y-4 border-t-2 border-t-primary">
               <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
                 <Shield className="w-4 h-4 text-primary" /> Membership Details
               </h3>
@@ -509,7 +476,7 @@ export default function MemberPortal({ onToast }) {
             </div>
 
             {/* Subscription Status Card */}
-            <div className="card p-5 space-y-4">
+            <div className="card p-5 space-y-4 border-t-2 border-t-primary">
               <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
                 <Calendar className="w-4 h-4 text-primary" /> Subscription Status
               </h3>
@@ -555,7 +522,7 @@ export default function MemberPortal({ onToast }) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Profile details form */}
-              <form onSubmit={handleProfileSave} className="card p-5 space-y-4 md:col-span-2">
+              <form onSubmit={handleProfileSave} className="card p-5 space-y-4 md:col-span-2 border-t-2 border-t-primary">
                 <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider mb-2">
                   <User className="w-4 h-4 text-primary" /> Edit Corporate Metadata
                 </h3>
@@ -666,7 +633,7 @@ export default function MemberPortal({ onToast }) {
               </form>
 
               {/* Document Vault Component */}
-              <div className="card p-5 space-y-4 flex flex-col justify-between">
+              <div className="card p-5 space-y-4 flex flex-col justify-between border-t-2 border-t-accent">
                 <div>
                   <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider mb-2">
                     <Upload className="w-4 h-4 text-primary" /> Document Vault
@@ -734,7 +701,7 @@ export default function MemberPortal({ onToast }) {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <div className="card p-4 border-amber-200 flex items-center justify-between gap-3 bg-amber-50/10">
+                    <div className="card p-4 border-amber-250 border-l-4 border-l-amber-500 flex items-center justify-between gap-3 bg-amber-50/10">
                       <div>
                         <p className="text-sm font-semibold text-slate-800">Subscription Year 2026</p>
                         <p className="text-xs text-amber-650 mt-0.5 font-medium">Payment Dues Outstanding</p>

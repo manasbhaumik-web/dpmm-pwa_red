@@ -90,7 +90,7 @@ export default function App() {
     addToast({ type: 'info', title: 'Signed Out', message: 'You have been signed out successfully.' });
   };
 
-  const isAdminAuthed  = auth.admin;
+  const isAdminAuthed = auth.admin;
   const isMemberAuthed = auth.member;
 
   const isAuthed = (id) =>
@@ -98,7 +98,7 @@ export default function App() {
 
   const getStatusLabel = () => {
     if (role === 'public') return 'Guest Session';
-    if (role === 'admin')  return isAdminAuthed  ? 'Signed in as Admin'        : 'Login required';
+    if (role === 'admin') return isAdminAuthed ? 'Signed in as Admin' : 'Login required';
     if (role === 'member') return isMemberAuthed ? 'Signed in · AG-2026-0042' : 'Login required';
     return 'Unauthenticated';
   };
@@ -191,13 +191,13 @@ export default function App() {
         {role === 'public' && (
           <div className="animate-fade-in">
             {showRegistration ? (
-              <RegistrationForm 
-                onToast={addToast} 
-                onCancel={() => setShowRegistration(false)} 
+              <RegistrationForm
+                onToast={addToast}
+                onCancel={() => setShowRegistration(false)}
               />
             ) : (
-              <LandingPage 
-                onRegister={() => setShowRegistration(true)} 
+              <LandingPage
+                onRegister={() => setShowRegistration(true)}
               />
             )}
           </div>

@@ -67,22 +67,22 @@ export function PaymentModal({ isOpen, onClose, onSuccess }) {
               <button
                 onClick={() => setMethod('fpx')}
                 className={`rounded-xl p-3 border text-left transition-all duration-200
-                  ${method === 'fpx' ? 'border-sky-500 bg-sky-50' : 'border-slate-200 bg-white hover:border-slate-300'}`}
+                  ${method === 'fpx' ? 'border-primary bg-primary/5' : 'border-slate-200 bg-white hover:border-slate-300'}`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <Building2 className={`w-4 h-4 ${method === 'fpx' ? 'text-sky-600' : 'text-slate-500'}`} />
-                  <span className={`text-xs font-semibold ${method === 'fpx' ? 'text-sky-600' : 'text-slate-700'}`}>FPX Online</span>
+                  <Building2 className={`w-4 h-4 ${method === 'fpx' ? 'text-primary' : 'text-slate-500'}`} />
+                  <span className={`text-xs font-semibold ${method === 'fpx' ? 'text-primary' : 'text-slate-700'}`}>FPX Online</span>
                 </div>
                 <p className="text-[10px] text-slate-9000">Malaysian internet banking</p>
               </button>
               <button
                 onClick={() => setMethod('card')}
                 className={`rounded-xl p-3 border text-left transition-all duration-200
-                  ${method === 'card' ? 'border-sky-500 bg-sky-50' : 'border-slate-200 bg-white hover:border-slate-300'}`}
+                  ${method === 'card' ? 'border-primary bg-primary/5' : 'border-slate-200 bg-white hover:border-slate-300'}`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <CreditCard className={`w-4 h-4 ${method === 'card' ? 'text-sky-600' : 'text-slate-500'}`} />
-                  <span className={`text-xs font-semibold ${method === 'card' ? 'text-sky-600' : 'text-slate-700'}`}>Card</span>
+                  <CreditCard className={`w-4 h-4 ${method === 'card' ? 'text-primary' : 'text-slate-500'}`} />
+                  <span className={`text-xs font-semibold ${method === 'card' ? 'text-primary' : 'text-slate-700'}`}>Card</span>
                 </div>
                 <p className="text-[10px] text-slate-9000">Credit / Debit card</p>
               </button>
@@ -99,7 +99,7 @@ export function PaymentModal({ isOpen, onClose, onSuccess }) {
                     key={bank.id}
                     onClick={() => setSelectedBank(bank.id)}
                     className={`rounded-xl p-3 border text-center transition-all duration-200 active:scale-95
-                      ${selectedBank === bank.id ? 'border-sky-500 ring-1 ring-sky-500' : 'border-slate-200 hover:border-slate-300'}`}
+                      ${selectedBank === bank.id ? 'border-primary ring-1 ring-primary' : 'border-slate-200 hover:border-slate-300'}`}
                     style={{ background: selectedBank === bank.id ? bank.bg + '33' : '' }}
                   >
                     <div
@@ -124,7 +124,7 @@ export function PaymentModal({ isOpen, onClose, onSuccess }) {
                   value={cardNum}
                   onChange={e => setCardNum(e.target.value.replace(/\D/g,'').slice(0,16))}
                   placeholder="0000 0000 0000 0000"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-1.5 text-sm text-slate-800 font-mono placeholder-slate-300 focus:outline-none focus:border-sky-500 transition-colors"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-1.5 text-sm text-slate-800 font-mono placeholder-slate-300 focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -134,7 +134,7 @@ export function PaymentModal({ isOpen, onClose, onSuccess }) {
                     value={cardExp}
                     onChange={e => setCardExp(e.target.value.slice(0,5))}
                     placeholder="MM/YY"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-1.5 text-sm text-slate-800 font-mono placeholder-slate-300 focus:outline-none focus:border-sky-500 transition-colors"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-1.5 text-sm text-slate-800 font-mono placeholder-slate-300 focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>
                 <div>
@@ -144,7 +144,7 @@ export function PaymentModal({ isOpen, onClose, onSuccess }) {
                     onChange={e => setCardCvc(e.target.value.replace(/\D/,'').slice(0,3))}
                     placeholder="•••"
                     type="password"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-1.5 text-sm text-slate-800 font-mono placeholder-slate-300 focus:outline-none focus:border-sky-500 transition-colors"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-1.5 text-sm text-slate-800 font-mono placeholder-slate-300 focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>
               </div>
@@ -246,7 +246,7 @@ export function B2BCard({ peer }) {
           <div className="flex items-center gap-1.5 mb-1">
             <p className="text-sm font-semibold text-slate-900 truncate">{peer.company}</p>
             {peer.verified && (
-              <span title="Verified Member" className="shrink-0 w-4 h-4 bg-sky-500 rounded-full flex items-center justify-center">
+              <span title="Verified Member" className="shrink-0 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                 <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>

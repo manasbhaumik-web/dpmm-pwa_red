@@ -92,10 +92,7 @@ export default function LoginPage({ defaultRole = 'admin', onLoginSuccess, onBac
   };
 
   return (
-    <div className="min-h-[calc(100dvh-8rem)] flex items-center justify-center px-4 py-10 animate-fade-in bg-slate-50 relative">
-      {/* Background glow */}
-      <div className={`absolute inset-0 opacity-40 pointer-events-none bg-gradient-to-br ${role.gradient}`} />
-
+    <div className="min-h-[calc(100dvh-8rem)] flex items-center justify-center px-4 py-10 animate-fade-in bg-transparent relative">
       <div className="w-full max-w-md relative z-10">
 
         {/* Logo + heading */}
