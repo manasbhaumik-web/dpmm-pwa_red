@@ -117,7 +117,7 @@ export default function App() {
           background: 'linear-gradient(135deg, #1e2e70 0%, #263a8d 60%, #2d45a9 100%)',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-4 h-[70px] flex items-center justify-between gap-3">
 
           {/* DPMM Logo — text version on dark navy header */}
           <div className="flex items-center gap-3 shrink-0">
