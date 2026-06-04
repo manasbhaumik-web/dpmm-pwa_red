@@ -81,7 +81,7 @@ export default function App() {
       title: authRole === 'admin' ? 'Admin Access Granted' : 'Welcome Back!',
       message: authRole === 'admin'
         ? 'Signed in as Association Manager.'
-        : 'Signed in as Iskandar Putra · AG-2026-0042',
+        : 'Signed in as Iskandar Putra · DPMM-2026-0042',
     });
   };
 
@@ -99,7 +99,7 @@ export default function App() {
   const getStatusLabel = () => {
     if (role === 'public') return 'Guest Session';
     if (role === 'admin') return isAdminAuthed ? 'Signed in as Admin' : 'Login required';
-    if (role === 'member') return isMemberAuthed ? 'Signed in · AG-2026-0042' : 'Login required';
+    if (role === 'member') return isMemberAuthed ? 'Signed in · DPMM-2026-0042' : 'Login required';
     return 'Unauthenticated';
   };
 

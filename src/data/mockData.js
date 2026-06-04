@@ -74,7 +74,7 @@ class MockRelationalDb {
   init() {
     // 1. Cleanse & import initial legacy spreadsheet rows
     LEGACY_SPREADSHEET_DATA.forEach((row, index) => {
-      const memberId = `AG-2026-${String(index + 1).padStart(4, '0')}`;
+      const memberId = `DPMM-2026-${String(index + 1).padStart(4, '0')}`;
       const address = row.address;
       const status = row.status === 'A' ? 'Active' : 'Lapsed';
       const expDate = cleanseDate(row.expiry_date);
@@ -142,7 +142,7 @@ class MockRelationalDb {
     ];
 
     for (let i = 9; i <= 209; i++) {
-      const memberId = `AG-2026-${String(i).padStart(4, '0')}`;
+      const memberId = `DPMM-2026-${String(i).padStart(4, '0')}`;
       const isLapsed = statuses[i % statuses.length] === 'Lapsed';
       
       const memberObj = {
@@ -298,7 +298,7 @@ class MockRelationalDb {
       const num = parseInt(m.member_id.split('-')[2]);
       return num > max ? num : max;
     }, 0);
-    const newId = `AG-2026-${String(maxNum + 1).padStart(4, '0')}`;
+    const newId = `DPMM-2026-${String(maxNum + 1).padStart(4, '0')}`;
     
     const newMember = {
       member_id: newId,

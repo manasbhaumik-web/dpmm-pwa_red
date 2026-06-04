@@ -143,7 +143,7 @@ function ReceiptPdfModal({ receipt, onClose }) {
           <div className="grid grid-cols-2 gap-2">
             <div>
               <span className="text-[10px] text-slate-400 block">MEMBERSHIP NO (MEMBER NO.):</span>
-              <span className="font-bold text-slate-800">AG-2026-0042</span>
+              <span className="font-bold text-slate-800">DPMM-2026-0042</span>
             </div>
             <div className="text-right">
               <span className="text-[10px] text-slate-400 block">GATEWAY TXN ID:</span>
@@ -192,7 +192,7 @@ function ReceiptPdfModal({ receipt, onClose }) {
 
 export default function MemberPortal({ onToast }) {
   const [member, setMember] = useState({
-    id: 'AG-2026-0042',
+    id: 'DPMM-2026-0042',
     company: 'Horizon Dynamics Sdn Bhd',
     ssm_no: '202201088990',
     category: 'Ordinary Member',
