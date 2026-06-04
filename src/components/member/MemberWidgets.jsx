@@ -151,11 +151,10 @@ export function PaymentModal({ isOpen, onClose, onSuccess }) {
             </div>
           )}
 
-          {/* Proceed Button */}
           <button
             onClick={handleProceed}
             disabled={!canProceed || processing}
-            className="btn-primary w-full flex items-center justify-center gap-2"
+            className="w-full bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-500 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 text-xs tracking-wider uppercase"
           >
             {processing ? (
               <>
@@ -246,7 +245,7 @@ export function B2BCard({ peer }) {
           <div className="flex items-center gap-1.5 mb-1">
             <p className="text-sm font-semibold text-slate-900 truncate">{peer.company}</p>
             {peer.verified && (
-              <span title="Verified Member" className="shrink-0 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+              <span title="Verified Member" className="shrink-0 w-4 h-4 bg-slate-900 rounded-full flex items-center justify-center">
                 <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>

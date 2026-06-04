@@ -31,7 +31,7 @@ function ReceiptRow({ receipt, onDownload }) {
             <p className="text-base font-black text-emerald-600">{receipt.amount}</p>
             <button
               onClick={() => onDownload(receipt)}
-              className="flex items-center gap-1.5 text-[10px] text-primary hover:text-primary/80 mt-1 transition-colors font-bold uppercase tracking-wider"
+              className="flex items-center gap-1.5 text-[10px] text-slate-700 hover:text-slate-900 mt-1 transition-colors font-bold uppercase tracking-wider"
             >
               <Download className="w-3 h-3" /> PDF Receipt
             </button>
@@ -81,7 +81,7 @@ function B2BTab({ memberStatus, memberState, memberId }) {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search verified businesses by name or services…"
-            className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-1.5 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-1.5 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors"
           />
         </div>
       </div>
@@ -353,7 +353,7 @@ export default function MemberPortal({ onToast }) {
         <div className="card p-5 relative overflow-hidden border-t-2 border-t-accent">
           <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at top right, #e42b40, transparent 70%)' }} />
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/90 rounded-2xl flex items-center justify-center text-white text-xl font-bold shrink-0">
+            <div className="w-14 h-14 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl flex items-center justify-center text-white text-xl font-bold shrink-0 shadow-lg">
               {member.company.charAt(0)}
             </div>
             <div className="flex-1">
@@ -366,8 +366,8 @@ export default function MemberPortal({ onToast }) {
               <p className="text-xs text-slate-500">{member.category}</p>
               <div className="flex flex-wrap items-center gap-4 mt-2">
                 <div className="flex items-center gap-1.5">
-                  <Shield className="w-3.5 h-3.5 text-primary" />
-                  <span className="text-xs text-primary font-mono font-semibold">Member No.: {member.id}</span>
+                  <Shield className="w-3.5 h-3.5 text-slate-700" />
+                  <span className="text-xs text-slate-700 font-mono font-semibold">Member No.: {member.id}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5 text-slate-400" />
@@ -442,7 +442,7 @@ export default function MemberPortal({ onToast }) {
               key={t.id}
               onClick={() => setActiveTab(t.id)}
               className={`flex-1 min-w-[100px] shrink-0 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
-                ${activeTab === t.id ? 'bg-primary text-white shadow-sm' : 'text-slate-500 hover:text-primary hover:bg-slate-50/50'}`}
+                ${activeTab === t.id ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50/50'}`}
               style={{ minHeight: '38px' }}
             >
               {t.label}
@@ -455,9 +455,9 @@ export default function MemberPortal({ onToast }) {
           <div className="animate-fade-in grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             {/* Membership Details */}
-            <div className="card p-5 space-y-4 border-t-2 border-t-primary">
+            <div className="card p-5 space-y-4 border-t-2 border-t-slate-900">
               <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
-                <Shield className="w-4 h-4 text-primary" /> Membership Details
+                <Shield className="w-4 h-4 text-slate-900" /> Membership Details
               </h3>
               {[
                 ['Member No.', member.id],
@@ -476,9 +476,9 @@ export default function MemberPortal({ onToast }) {
             </div>
 
             {/* Subscription Status Card */}
-            <div className="card p-5 space-y-4 border-t-2 border-t-primary">
+            <div className="card p-5 space-y-4 border-t-2 border-t-slate-900">
               <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
-                <Calendar className="w-4 h-4 text-primary" /> Subscription Status
+                <Calendar className="w-4 h-4 text-slate-900" /> Subscription Status
               </h3>
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
                 <p className="text-[10px] text-slate-400 uppercase font-bold">Current Active Year</p>
@@ -497,8 +497,8 @@ export default function MemberPortal({ onToast }) {
               </div>
               <button
                 onClick={() => setShowPayment(true)}
-                className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2"
-                style={{ minHeight: '32px' }}
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
+                style={{ minHeight: '36px' }}
               >
                 <CreditCard className="w-4 h-4" /> Renew Membership Subscription
               </button>
@@ -510,11 +510,11 @@ export default function MemberPortal({ onToast }) {
           <div className="animate-fade-in space-y-5">
             
             {/* PDPA Privacy Protection Notice */}
-            <div className="bg-primary/10 border border-primary/30 rounded-2xl p-4 flex gap-3 items-start">
-              <Lock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex gap-3 items-start">
+              <Lock className="w-5 h-5 text-slate-700 shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-bold text-primary/90">PDPA & RLS Privacy Lock Enabled</p>
-                <p className="text-[10px] text-primary leading-relaxed mt-0.5">
+                <p className="text-xs font-bold text-slate-800">PDPA & RLS Privacy Lock Enabled</p>
+                <p className="text-[10px] text-slate-600 leading-relaxed mt-0.5">
                   Sensitive personal credentials (like personal IC Number <span className="font-bold font-mono">{member.ic_number.slice(0,6)}-XX-XXXX</span>) are strictly isolated from the public directory. Your database access is governed by strict Supabase RLS policies and compliance standards.
                 </p>
               </div>
@@ -522,9 +522,9 @@ export default function MemberPortal({ onToast }) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Profile details form */}
-              <form onSubmit={handleProfileSave} className="card p-5 space-y-4 md:col-span-2 border-t-2 border-t-primary">
+              <form onSubmit={handleProfileSave} className="card p-5 space-y-4 md:col-span-2 border-t-2 border-t-slate-900">
                 <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider mb-2">
-                  <User className="w-4 h-4 text-primary" /> Edit Corporate Metadata
+                  <User className="w-4 h-4 text-slate-900" /> Edit Corporate Metadata
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -555,7 +555,7 @@ export default function MemberPortal({ onToast }) {
                       type="text"
                       value={editedContact}
                       onChange={e => setEditedContact(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-primary outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-slate-400 outline-none"
                     />
                   </div>
                   <div>
@@ -564,7 +564,7 @@ export default function MemberPortal({ onToast }) {
                       type="email"
                       value={editedEmail}
                       onChange={e => setEditedEmail(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-primary outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-slate-400 outline-none"
                     />
                   </div>
                 </div>
@@ -576,7 +576,7 @@ export default function MemberPortal({ onToast }) {
                       type="tel"
                       value={editedPhone}
                       onChange={e => setEditedPhone(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono focus:border-primary outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono focus:border-slate-400 outline-none"
                     />
                   </div>
                   <div>
@@ -585,7 +585,7 @@ export default function MemberPortal({ onToast }) {
                       type="tel"
                       value={editedOffice}
                       onChange={e => setEditedOffice(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono focus:border-primary outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono focus:border-slate-400 outline-none"
                     />
                   </div>
                 </div>
@@ -596,7 +596,7 @@ export default function MemberPortal({ onToast }) {
                     <select
                       value={editedBizType}
                       onChange={e => setEditedBizType(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-primary outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-slate-400 outline-none"
                     >
                       {SECTORS.filter(s => s !== 'All').map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
@@ -606,7 +606,7 @@ export default function MemberPortal({ onToast }) {
                     <select
                       value={editedState}
                       onChange={e => setEditedState(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-primary outline-none"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-slate-400 outline-none"
                     >
                       {MALAYSIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
@@ -619,13 +619,13 @@ export default function MemberPortal({ onToast }) {
                     rows={2}
                     value={editedAddress}
                     onChange={e => setEditedAddress(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-primary outline-none resize-none"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:border-slate-400 outline-none resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="bg-primary hover:bg-primary text-white font-bold py-1.5 px-3 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 shadow-sm"
+                  className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1.5 px-3 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 shadow-sm"
                   style={{ minHeight: '40px' }}
                 >
                   Save Profile Updates
@@ -636,7 +636,7 @@ export default function MemberPortal({ onToast }) {
               <div className="card p-5 space-y-4 flex flex-col justify-between border-t-2 border-t-accent">
                 <div>
                   <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider mb-2">
-                    <Upload className="w-4 h-4 text-primary" /> Document Vault
+                    <Upload className="w-4 h-4 text-slate-900" /> Document Vault
                   </h3>
                   <p className="text-[10px] text-slate-500 leading-normal">
                     Store and renew certified company profiles securely. Submit updated SSM profile documents for annual compliance confirmation checks.
@@ -646,7 +646,7 @@ export default function MemberPortal({ onToast }) {
                 {ssmFileUploaded ? (
                   <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 bg-primary/10 text-primary rounded-lg">
+                      <div className="p-2 bg-slate-200 text-slate-700 rounded-lg">
                         <FileText className="w-5 h-5" />
                       </div>
                       <div className="min-w-0 flex-1">
@@ -661,7 +661,7 @@ export default function MemberPortal({ onToast }) {
                     </label>
                   </div>
                 ) : (
-                  <label className="border-2 border-dashed border-slate-250 hover:border-primary/50 hover:bg-primary/10/10 cursor-pointer rounded-2xl p-6 flex flex-col items-center justify-center text-center transition-all">
+                  <label className="border-2 border-dashed border-slate-250 hover:border-slate-400 hover:bg-slate-50 cursor-pointer rounded-2xl p-6 flex flex-col items-center justify-center text-center transition-all">
                     <Upload className="w-6 h-6 text-slate-400 mb-2" />
                     <span className="text-[10px] font-bold text-slate-700">Drop SSM Document</span>
                     <span className="text-[9px] text-slate-400 mt-0.5">PDF or image files up to 5MB</span>
@@ -676,7 +676,7 @@ export default function MemberPortal({ onToast }) {
                       <span>{ssmUploadProgress}%</span>
                     </div>
                     <div className="w-full bg-slate-200 rounded-full h-1 overflow-hidden">
-                      <div className="bg-primary h-full transition-all" style={{ width: `${ssmUploadProgress}%` }} />
+                      <div className="bg-slate-800 h-full transition-all" style={{ width: `${ssmUploadProgress}%` }} />
                     </div>
                   </div>
                 )}
@@ -688,7 +688,7 @@ export default function MemberPortal({ onToast }) {
         {activeTab === 'receipts' && (
           <div className="animate-fade-in space-y-4">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <Download className="w-4.5 h-4.5 text-primary" /> Receipt History Vault
+              <Download className="w-4.5 h-4.5 text-slate-900" /> Receipt History Vault
             </h3>
             <div className="relative pt-2">
               {receiptsList.map(r => <ReceiptRow key={r.id} receipt={r} onDownload={(rec) => setSelectedReceipt(rec)} />)}

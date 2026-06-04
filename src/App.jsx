@@ -75,7 +75,11 @@ export default function App() {
   };
 
   const handleLoginSuccess = (authRole) => {
-    setAuth(a => ({ ...a, [authRole]: true }));
+    setRole(authRole);
+    setAuth({
+      admin: authRole === 'admin',
+      member: authRole === 'member'
+    });
     addToast({
       type: 'success',
       title: authRole === 'admin' ? 'Admin Access Granted' : 'Welcome Back!',
@@ -114,7 +118,7 @@ export default function App() {
         className="sticky top-0 z-50 border-b border-slate-200"
         style={{
           paddingTop: 'env(safe-area-inset-top, 0px)',
-          background: 'linear-gradient(135deg, #1e2e70 0%, #263a8d 60%, #2d45a9 100%)',
+          background: 'linear-gradient(135deg, #b62233 0%, #e42b40 60%, #ff334c 100%)',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 h-[70px] flex items-center justify-between gap-3">
@@ -128,27 +132,21 @@ export default function App() {
             />
           </div>
 
-          {/* Desktop tab switcher (hidden on mobile — bottom bar used instead) */}
-          <nav className="hidden md:flex items-center gap-2">
-            {ROLES.map(r => {
-              const active = role === r.id;
-              return (
-                <button
-                  key={r.id}
-                  onClick={() => handleRoleChange(r.id)}
-                  className={`relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                    ${active ? 'text-white bg-white/20 shadow-inner' : 'text-white/70 hover:text-white hover:bg-white/10'}`}
-                >
-                  <r.icon className="w-4 h-4" />
-                  {r.fullLabel}
-                  <span className={`w-1.5 h-1.5 rounded-full ${isAuthed(r.id) ? 'bg-emerald-400' : 'bg-white/30'}`} />
-                </button>
-              );
-            })}
-          </nav>
 
-          {/* Right: Sign Out + status */}
+          {/* Right: Actions + status */}
           <div className="flex items-center gap-2">
+            {!showSignOut && (
+              <button
+                onClick={() => setRole('member')}
+                className="flex items-center gap-1.5 text-xs text-white/70 hover:text-white
+                           border border-white/20 hover:border-white/40
+                           px-3 py-2 rounded-xl transition-all duration-200 bg-white/10"
+                style={{ minHeight: '36px' }}
+              >
+                <User className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Login</span>
+              </button>
+            )}
             {showSignOut && (
               <button
                 onClick={() => handleLogout(role)}
@@ -244,7 +242,7 @@ export default function App() {
       <nav
         className="md:hidden fixed bottom-0 inset-x-0 z-50 border-t border-slate-200 bottom-nav"
         style={{
-          background: 'linear-gradient(135deg, #1e2e70 0%, #263a8d 100%)',
+          background: '#0f172a',
           paddingLeft: 'env(safe-area-inset-left,0px)',
           paddingRight: 'env(safe-area-inset-right,0px)',
         }}
@@ -302,7 +300,7 @@ export default function App() {
       {/* ── Footer (desktop only) ─────────────────────────────── */}
       <footer
         className="hidden md:block border-t py-4 px-4"
-        style={{ borderColor: '#1e2e70', background: 'linear-gradient(135deg, #1e2e70 0%, #263a8d 100%)' }}
+        style={{ borderColor: '#0f172a', background: '#0f172a' }}
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
