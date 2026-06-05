@@ -51,7 +51,7 @@ export default function UserGuidePage() {
             <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4">
               <p className="text-sm text-emerald-800 font-medium flex items-start gap-2">
                 <CheckCircle2 className="w-5 h-5 shrink-0" />
-                This application works across desktops, tablets, and smartphones. You can even install it on your home screen as a Progressive Web App (PWA)!
+                This application works seamlessly across desktops, tablets, and smartphones.
               </p>
             </div>
           </section>

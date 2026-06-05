@@ -15,7 +15,7 @@ export default defineConfig({
         description: 'Digital membership platform for Dewan Perniagaan Melayu Malaysia (DPMM)',
         theme_color: '#1e2e70',
         background_color: '#0b1028',
-        display: 'standalone',
+        display: 'browser',
         orientation: 'portrait-primary',
         scope: '/dpmm-pwa_red/',
         start_url: '/dpmm-pwa_red/',

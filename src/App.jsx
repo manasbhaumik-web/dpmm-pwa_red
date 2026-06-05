@@ -3,7 +3,6 @@ const dpmmLogo = `${import.meta.env.BASE_URL}logo.png`;
 const dpmmTextLogo = `${import.meta.env.BASE_URL}dpmm-white-text.png`;
 import { Shield, User, LogOut, Globe, Book } from 'lucide-react';
 import { ToastContainer } from './components/shared/Toast';
-import InstallPrompt from './components/shared/InstallPrompt';
 import LoginPage from './components/auth/LoginPage';
 import AdminDashboard from './components/admin/AdminDashboard';
 import MemberPortal from './components/member/MemberPortal';
@@ -348,8 +347,7 @@ export default function App() {
         )}
       </main>
 
-      {/* ── PWA Install Prompt ─────────────────────────────── */}
-      <InstallPrompt />
+      {/* ── Removed PWA Install Prompt ─────────────────────────────── */}
 
       {/* ── Mobile Bottom Tab Bar (Android / iOS) ─────────────── */}
       {/* Hidden on md+ desktop, replaces hamburger menu on mobile */}
