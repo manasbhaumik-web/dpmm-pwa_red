@@ -225,7 +225,7 @@ export default function App() {
               onClick={() => setRole('public')}
               className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
                          border border-white hover:border-rose-100
-                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md opacity-70 hover:opacity-100"
               style={{ minHeight: '36px' }}
             >
               <Globe className="w-3.5 h-3.5" />
@@ -235,7 +235,7 @@ export default function App() {
               onClick={() => setRole('guide')}
               className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
                          border border-white hover:border-rose-100
-                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md opacity-70 hover:opacity-100"
               style={{ minHeight: '36px' }}
             >
               <Book className="w-3.5 h-3.5" />
@@ -246,7 +246,7 @@ export default function App() {
                 onClick={() => setRole('member')}
                 className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
                            border border-white hover:border-rose-100
-                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md opacity-70 hover:opacity-100"
                 style={{ minHeight: '36px' }}
               >
                 <User className="w-3.5 h-3.5" />
@@ -258,7 +258,7 @@ export default function App() {
                 onClick={() => handleLogout(role)}
                 className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
                            border border-white hover:border-rose-100
-                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md opacity-70 hover:opacity-100"
                 style={{ minHeight: '36px' }}
               >
                 <LogOut className="w-3.5 h-3.5" />
