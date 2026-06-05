@@ -431,7 +431,7 @@ export default function MemberPortal({ onToast }) {
         )}
 
         {/* Tabs Selection Bar */}
-        <div className="flex p-1 bg-slate-100 border border-slate-200 rounded-xl overflow-x-auto whitespace-nowrap scrollbar-thin shadow-inner gap-1">
+        <div className="grid grid-cols-2 sm:flex p-1 bg-slate-100 border border-slate-200 rounded-xl shadow-inner gap-1">
           {[
             { id: 'overview', label: 'Overview' },
             { id: 'profile',  label: 'Corporate Profile' },

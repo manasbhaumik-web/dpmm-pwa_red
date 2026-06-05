@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 const dpmmLogo = `${import.meta.env.BASE_URL}logo.png`;
 const dpmmTextLogo = `${import.meta.env.BASE_URL}dpmm-white-text.png`;
 import { Shield, User, LogOut, Globe, Book } from 'lucide-react';
@@ -66,8 +66,28 @@ const DEFAULT_AUTH = { admin: false, member: false };
 let toastCounter = 0;
 
 export default function App() {
-  const [role, setRole] = useState('public');
-  const [auth, setAuth] = useState(DEFAULT_AUTH);
+  const [role, setRole] = useState(() => {
+    return sessionStorage.getItem('dpmm_role') || 'public';
+  });
+  const [auth, setAuth] = useState(() => {
+    const saved = sessionStorage.getItem('dpmm_auth');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return DEFAULT_AUTH;
+      }
+    }
+    return DEFAULT_AUTH;
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('dpmm_role', role);
+  }, [role]);
+
+  useEffect(() => {
+    sessionStorage.setItem('dpmm_auth', JSON.stringify(auth));
+  }, [auth]);
   const [toasts, setToasts] = useState([]);
   const [showRegistration, setShowRegistration] = useState(false);
 
@@ -88,10 +108,10 @@ export default function App() {
 
   const handleLoginSuccess = (authRole) => {
     setRole(authRole);
-    setAuth({
-      admin: authRole === 'admin',
-      member: authRole === 'member'
-    });
+    setAuth(prev => ({
+      ...prev,
+      [authRole]: true
+    }));
     addToast({
       type: 'success',
       title: authRole === 'admin' ? 'Admin Access Granted' : 'Welcome Back!',

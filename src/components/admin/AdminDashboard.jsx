@@ -1036,7 +1036,7 @@ export default function AdminDashboard({ onToast }) {
       </section>
 
       {/* Tab Switcher */}
-      <div className="flex gap-1.5 bg-slate-100 border border-slate-200 rounded-xl p-1 overflow-x-auto whitespace-nowrap scrollbar-thin shadow-inner">
+      <div className="flex flex-col sm:flex-row gap-1.5 bg-slate-100 border border-slate-200 rounded-xl p-1 shadow-inner">
         {[
           { id: 'dashboard', label: 'Management Dashboard', icon: Shield },
           { id: 'ledger', label: 'Financial Ledger & Override', icon: DollarSign },
