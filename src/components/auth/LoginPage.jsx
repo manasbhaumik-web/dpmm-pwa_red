@@ -207,11 +207,11 @@ export default function LoginPage({ defaultRole = 'admin', onLoginSuccess, onBac
                 {loading ? (
                   <>
                     <div className="w-4.5 h-4.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Signing In…
+                    <span>Signing In…</span>
                   </>
                 ) : (
                   <>
-                    Sign In <ArrowRight className="w-4.5 h-4.5" />
+                    <span>Sign In</span> <ArrowRight className="w-4.5 h-4.5" />
                   </>
                 )}
               </button>
