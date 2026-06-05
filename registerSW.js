@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/dpmm-pwa_red/sw.js', { scope: '/dpmm-pwa_red/' })})}
