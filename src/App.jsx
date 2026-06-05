@@ -29,11 +29,10 @@ const ROLES = [
     fullLabel: 'Admin Workspace',
     sub: 'Association Manager',
     icon: Shield,
-    // DPMM accent red
-    color: 'text-accent',
-    bg: 'bg-accent/10',
-    border: 'border-accent/20',
-    activeBg: 'bg-accent',
+    color: 'text-blue-900',
+    bg: 'bg-blue-900/10',
+    border: 'border-blue-900/20',
+    activeBg: 'bg-blue-900',
     activeText: 'text-white',
   },
   {
@@ -42,10 +41,10 @@ const ROLES = [
     fullLabel: 'Member Portal',
     sub: 'Authenticated Member',
     icon: User,
-    color: 'text-primary',
-    bg: 'bg-primary/5',
-    border: 'border-primary/20',
-    activeBg: 'bg-primary',
+    color: 'text-blue-900',
+    bg: 'bg-blue-900/10',
+    border: 'border-blue-900/20',
+    activeBg: 'bg-blue-900',
     activeText: 'text-white',
   },
 ];
@@ -124,23 +123,37 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 h-[70px] flex items-center justify-between gap-3">
 
           {/* DPMM Logo — text version on dark navy header */}
-          <div className="flex items-center gap-3 shrink-0">
+          <button
+            onClick={() => setRole('public')}
+            className="flex items-center gap-3 shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+            aria-label="Home"
+          >
             <img
               src={dpmmTextLogo}
               alt="DPMM Text Logo"
               className="h-10 sm:h-14 object-contain drop-shadow-md"
             />
-          </div>
+          </button>
 
 
           {/* Right: Actions + status */}
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setRole('public')}
+              className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                         border border-white hover:border-rose-100
+                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+              style={{ minHeight: '36px' }}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Home</span>
+            </button>
             {!showSignOut && (
               <button
                 onClick={() => setRole('member')}
-                className="flex items-center gap-1.5 text-xs text-white/70 hover:text-white
-                           border border-white/20 hover:border-white/40
-                           px-3 py-2 rounded-xl transition-all duration-200 bg-white/10"
+                className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                           border border-white hover:border-rose-100
+                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
                 style={{ minHeight: '36px' }}
               >
                 <User className="w-3.5 h-3.5" />
@@ -150,19 +163,19 @@ export default function App() {
             {showSignOut && (
               <button
                 onClick={() => handleLogout(role)}
-                className="flex items-center gap-1.5 text-xs text-white/70 hover:text-white
-                           border border-white/20 hover:border-white/40
-                           px-3 py-2 rounded-xl transition-all duration-200 bg-white/10"
+                className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                           border border-white hover:border-rose-100
+                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
                 style={{ minHeight: '36px' }}
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Sign Out</span>
               </button>
             )}
-            <div className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-semibold
-              bg-white/10 border-white/20 text-white`}>
+            <div className={`hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full border text-[10px] font-bold shadow-sm
+              bg-white border-white text-rose-800`}>
               <span className={`w-1.5 h-1.5 rounded-full animate-pulse
-                ${showSignOut ? 'bg-emerald-400' : 'bg-white/40'}`}
+                ${showSignOut ? 'bg-emerald-500' : 'bg-rose-400'}`}
               />
               {getStatusLabel()}
             </div>
@@ -305,7 +318,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <img src={dpmmLogo} alt="DPMM" className="w-5 h-5 object-contain opacity-80" />
-            <p className="text-[11px] text-white/60">© 2026 Dewan Perniagaan Melayu Malaysia (DPMM) · Hak Cipta Terpelihara</p>
+            <p className="text-[11px] text-white/60">
+              © 2026 Dewan Perniagaan Melayu Malaysia (DPMM) · Hak Cipta Terpelihara · <a href="https://dpmm.org.my" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">dpmm.org.my</a>
+            </p>
           </div>
           <p className="text-[11px] text-white/40">Sistem v2.0.0 · Dibina dengan React + Tailwind CSS</p>
         </div>

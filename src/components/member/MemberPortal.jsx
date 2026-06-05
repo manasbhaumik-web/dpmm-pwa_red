@@ -31,7 +31,7 @@ function ReceiptRow({ receipt, onDownload }) {
             <p className="text-base font-black text-emerald-600">{receipt.amount}</p>
             <button
               onClick={() => onDownload(receipt)}
-              className="flex items-center gap-1.5 text-[10px] text-slate-700 hover:text-slate-900 mt-1 transition-colors font-bold uppercase tracking-wider"
+              className="flex items-center gap-1.5 text-[10px] text-slate-700 hover:text-blue-900 mt-1 transition-colors font-bold uppercase tracking-wider"
             >
               <Download className="w-3 h-3" /> PDF Receipt
             </button>
@@ -124,7 +124,7 @@ function ReceiptPdfModal({ receipt, onClose }) {
         {/* Receipt Formatted Sheet */}
         <div className="border border-slate-300 p-6 rounded-xl font-mono text-xs text-slate-700 bg-slate-50/50 space-y-4" id="printable-receipt">
           <div className="text-center border-b border-dashed border-slate-300 pb-4 space-y-1">
-            <h3 className="text-sm font-bold text-slate-900">DEWAN PERNIAGAAN MELAYU MALAYSIA (DPMM)</h3>
+            <h3 className="text-sm font-bold text-blue-900">DEWAN PERNIAGAAN MELAYU MALAYSIA (DPMM)</h3>
             <p className="text-[10px] text-slate-500">Kuala Lumpur, Malaysia · Reg. Association 9822/ROC</p>
             <p className="text-[11px] font-bold text-slate-800 pt-2 uppercase tracking-wide">Official Renewal Receipt (RESIT RASMI)</p>
           </div>
@@ -174,7 +174,7 @@ function ReceiptPdfModal({ receipt, onClose }) {
         <div className="mt-5 flex gap-3">
           <button
             onClick={() => window.print()}
-            className="flex-1 bg-accent hover:bg-accent-dark text-white text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-2"
+            className="flex-1 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-2"
           >
             <Printer className="w-4 h-4" /> Print Receipt
           </button>
@@ -350,15 +350,15 @@ export default function MemberPortal({ onToast }) {
       <div className="space-y-5">
         
         {/* Profile overview card */}
-        <div className="card p-5 relative overflow-hidden border-t-2 border-t-accent">
+        <div className="card p-5 relative overflow-hidden border-t-2 border-t-blue-900">
           <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at top right, #e42b40, transparent 70%)' }} />
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl flex items-center justify-center text-white text-xl font-bold shrink-0 shadow-lg">
+            <div className="w-14 h-14 bg-accent rounded-2xl flex items-center justify-center text-white text-xl font-bold shrink-0 shadow-lg">
               {member.company.charAt(0)}
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-1">
-                <h1 className="text-lg font-bold text-slate-900">{member.company}</h1>
+                <h1 className="text-lg font-bold text-black">{member.company}</h1>
                 <span className={member.status === 'Active' ? 'badge-active' : 'badge-lapsed'}>
                   {member.status}
                 </span>
@@ -442,7 +442,7 @@ export default function MemberPortal({ onToast }) {
               key={t.id}
               onClick={() => setActiveTab(t.id)}
               className={`flex-1 min-w-[100px] shrink-0 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
-                ${activeTab === t.id ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50/50'}`}
+                ${activeTab === t.id ? 'bg-blue-900 text-white shadow-sm' : 'text-slate-500 hover:text-blue-900 hover:bg-slate-50/50'}`}
               style={{ minHeight: '38px' }}
             >
               {t.label}
@@ -455,9 +455,9 @@ export default function MemberPortal({ onToast }) {
           <div className="animate-fade-in grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             {/* Membership Details */}
-            <div className="card p-5 space-y-4 border-t-2 border-t-slate-900">
+            <div className="card p-5 space-y-4 border-t-2 border-t-blue-900">
               <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
-                <Shield className="w-4 h-4 text-slate-900" /> Membership Details
+                <Shield className="w-4 h-4 text-blue-900" /> Membership Details
               </h3>
               {[
                 ['Member No.', member.id],
@@ -476,13 +476,13 @@ export default function MemberPortal({ onToast }) {
             </div>
 
             {/* Subscription Status Card */}
-            <div className="card p-5 space-y-4 border-t-2 border-t-slate-900">
+            <div className="card p-5 space-y-4 border-t-2 border-t-blue-900">
               <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
-                <Calendar className="w-4 h-4 text-slate-900" /> Subscription Status
+                <Calendar className="w-4 h-4 text-blue-900" /> Subscription Status
               </h3>
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
                 <p className="text-[10px] text-slate-400 uppercase font-bold">Current Active Year</p>
-                <p className="text-2xl font-black text-slate-900 mt-0.5">2026</p>
+                <p className="text-2xl font-black text-blue-900 mt-0.5">2026</p>
                 <span className={`mt-2 inline-block ${member.status === 'Active' ? 'badge-active' : 'badge-lapsed'}`}>
                   {member.status}
                 </span>
@@ -497,7 +497,7 @@ export default function MemberPortal({ onToast }) {
               </div>
               <button
                 onClick={() => setShowPayment(true)}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
+                className="w-full bg-accent hover:bg-accent-dark text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
                 style={{ minHeight: '36px' }}
               >
                 <CreditCard className="w-4 h-4" /> Renew Membership Subscription
@@ -522,9 +522,9 @@ export default function MemberPortal({ onToast }) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Profile details form */}
-              <form onSubmit={handleProfileSave} className="card p-5 space-y-4 md:col-span-2 border-t-2 border-t-slate-900">
+              <form onSubmit={handleProfileSave} className="card p-5 space-y-4 md:col-span-2 border-t-2 border-t-blue-900">
                 <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider mb-2">
-                  <User className="w-4 h-4 text-slate-900" /> Edit Corporate Metadata
+                  <User className="w-4 h-4 text-blue-900" /> Edit Corporate Metadata
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -625,7 +625,7 @@ export default function MemberPortal({ onToast }) {
 
                 <button
                   type="submit"
-                  className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1.5 px-3 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 shadow-sm"
+                  className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-1.5 px-3 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 shadow-sm"
                   style={{ minHeight: '40px' }}
                 >
                   Save Profile Updates
@@ -633,10 +633,10 @@ export default function MemberPortal({ onToast }) {
               </form>
 
               {/* Document Vault Component */}
-              <div className="card p-5 space-y-4 flex flex-col justify-between border-t-2 border-t-accent">
+              <div className="card p-5 space-y-4 flex flex-col justify-between border-t-2 border-t-blue-900">
                 <div>
                   <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider mb-2">
-                    <Upload className="w-4 h-4 text-slate-900" /> Document Vault
+                    <Upload className="w-4 h-4 text-blue-900" /> Document Vault
                   </h3>
                   <p className="text-[10px] text-slate-500 leading-normal">
                     Store and renew certified company profiles securely. Submit updated SSM profile documents for annual compliance confirmation checks.
@@ -688,7 +688,7 @@ export default function MemberPortal({ onToast }) {
         {activeTab === 'receipts' && (
           <div className="animate-fade-in space-y-4">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <Download className="w-4.5 h-4.5 text-slate-900" /> Receipt History Vault
+              <Download className="w-4.5 h-4.5 text-blue-900" /> Receipt History Vault
             </h3>
             <div className="relative pt-2">
               {receiptsList.map(r => <ReceiptRow key={r.id} receipt={r} onDownload={(rec) => setSelectedReceipt(rec)} />)}

@@ -154,7 +154,7 @@ export function PaymentModal({ isOpen, onClose, onSuccess }) {
           <button
             onClick={handleProceed}
             disabled={!canProceed || processing}
-            className="w-full bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-500 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 text-xs tracking-wider uppercase"
+            className="w-full bg-accent hover:bg-accent-dark disabled:bg-slate-300 disabled:text-slate-500 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 text-xs tracking-wider uppercase"
           >
             {processing ? (
               <>
