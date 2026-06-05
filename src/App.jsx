@@ -62,6 +62,57 @@ const ROLES = [
   },
 ];
 
+import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-6 text-center">
+          <div className="bg-white border border-rose-200 p-8 rounded-2xl shadow-xl max-w-lg w-full">
+            <h1 className="text-xl font-black text-rose-700 mb-4 flex items-center justify-center gap-2">
+              <Shield className="w-6 h-6" /> System Crash Detected
+            </h1>
+            <p className="text-sm text-slate-600 mb-4">
+              A critical error occurred while rendering the interface. This is typically caused by stale browser cache or invalid session data.
+            </p>
+            <div className="bg-slate-100 p-4 rounded-lg text-left overflow-auto mb-6 border border-slate-200">
+              <code className="text-xs text-rose-600 break-words font-mono">
+                {this.state.error && this.state.error.toString()}
+              </code>
+            </div>
+            <button
+              onClick={() => {
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.reload(true);
+              }}
+              className="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-6 rounded-xl transition-all shadow-md"
+            >
+              Clear Cache & Reload
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children; 
+  }
+}
+
 const DEFAULT_AUTH = { admin: false, member: false };
 let toastCounter = 0;
 
@@ -142,8 +193,9 @@ export default function App() {
   const showSignOut = (role === 'admin' && isAdminAuthed) || (role === 'member' && isMemberAuthed);
 
   return (
-    <div className="min-h-dvh bg-slate-50 flex flex-col">
-      <ToastContainer toasts={toasts} onDismiss={removeToast} />
+    <ErrorBoundary>
+      <div className="min-h-dvh bg-slate-50 flex flex-col">
+        <ToastContainer toasts={toasts} onDismiss={removeToast} />
 
       {/* ── Top Navbar ───────────────────────────────────────── */}
       <header
@@ -375,6 +427,7 @@ export default function App() {
           <p className="text-[11px] text-white/40">Sistem v2.0.0 · Dibina dengan React + Tailwind CSS</p>
         </div>
       </footer>
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
