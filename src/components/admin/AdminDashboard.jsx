@@ -7,9 +7,9 @@ import {
 } from 'lucide-react';
 import { dbInstance, DDL_METADATA, simulatedWebhookListener, MALAYSIAN_STATES } from '../../data/mockData';
 import { read, utils } from 'xlsx';
+import MemberProfileModal from './MemberProfileModal';
 
 const STATUS_FILTERS = ['All', 'Active', 'Pending', 'Lapsed'];
-import MemberProfileModal from './MemberProfileModal';
 
 function KPICard({ icon: Icon, label, value, sub, color }) {
   let borderClass = "border-l-4 border-slate-900";
