@@ -10,6 +10,7 @@ import MemberPortal from './components/member/MemberPortal';
 import LandingPage from './components/public/LandingPage';
 import RegistrationForm from './components/public/RegistrationForm';
 import UserGuidePage from './components/public/UserGuidePage';
+import React from 'react';
 
 const ROLES = [
   {
@@ -61,8 +62,6 @@ const ROLES = [
     activeText: 'text-white',
   },
 ];
-
-import React from 'react';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
