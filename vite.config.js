@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  base: '/dpmm-pwa/',
+  base: '/dpmm-pwa_red/',
   plugins: [
     react(),
     VitePWA({
@@ -17,8 +17,8 @@ export default defineConfig({
         background_color: '#0b1028',
         display: 'standalone',
         orientation: 'portrait-primary',
-        scope: '/dpmm-pwa/',
-        start_url: '/dpmm-pwa/',
+        scope: '/dpmm-pwa_red/',
+        start_url: '/dpmm-pwa_red/',
         lang: 'ms-MY',
         categories: ['business', 'government'],
         icons: [

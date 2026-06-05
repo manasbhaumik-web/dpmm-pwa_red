@@ -9,9 +9,10 @@ import { dbInstance, DDL_METADATA, simulatedWebhookListener, MALAYSIAN_STATES } 
 import { read, utils } from 'xlsx';
 
 const STATUS_FILTERS = ['All', 'Active', 'Pending', 'Lapsed'];
+import MemberProfileModal from './MemberProfileModal';
 
 function KPICard({ icon: Icon, label, value, sub, color }) {
-  let borderClass = "border-l-4 border-primary";
+  let borderClass = "border-l-4 border-slate-900";
   if (color) {
     if (color.includes("emerald")) borderClass = "border-l-4 border-emerald-500";
     else if (color.includes("amber")) borderClass = "border-l-4 border-amber-500";
@@ -19,12 +20,12 @@ function KPICard({ icon: Icon, label, value, sub, color }) {
   }
   return (
     <div className={`card p-5 flex items-start gap-4 ${borderClass}`}>
-      <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-primary-dark text-white">
+      <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-blue-900 text-white">
         <Icon className="w-6 h-6" />
       </div>
       <div>
         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{label}</p>
-        <p className="text-2xl font-black text-slate-900 mt-0.5">{value}</p>
+        <p className="text-2xl font-black text-blue-900 mt-0.5">{value}</p>
         {sub && <p className="text-[10px] text-slate-450 mt-0.5 font-medium">{sub}</p>}
       </div>
     </div>
@@ -35,7 +36,7 @@ function DocPreview({ label, color, onView }) {
   return (
     <button
       onClick={onView}
-      className="group relative w-24 h-32 rounded-xl overflow-hidden border border-slate-200 hover:border-primary transition-all duration-200 hover:scale-105 bg-white"
+      className="group relative w-24 h-32 rounded-xl overflow-hidden border border-slate-200 hover:border-slate-900 transition-all duration-200 hover:scale-105 bg-white"
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 p-2 bg-slate-50/50">
         <FileCheck className="w-7 h-7" style={{ color }} />
@@ -56,7 +57,7 @@ function DocModal({ doc, onClose }) {
       <div className="relative w-full max-w-md bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xl animate-scale-in">
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
           <div className="flex items-center gap-2">
-            <FileCheck className="w-4.5 h-4.5 text-primary" />
+            <FileCheck className="w-4.5 h-4.5 text-blue-900" />
             <span className="text-xs font-bold text-slate-800">{doc.label}</span>
           </div>
           <button onClick={onClose} className="text-slate-450 hover:text-slate-650 p-1 border rounded-lg hover:bg-slate-50 transition-colors">
@@ -78,7 +79,7 @@ function DocModal({ doc, onClose }) {
         </div>
         <div className="px-5 py-4 flex justify-between items-center border-t border-slate-100 bg-slate-50/50">
           <span className="text-[10px] text-slate-450 font-bold uppercase">SSL Verified Link</span>
-          <button className="bg-primary hover:bg-primary-dark text-white text-[10px] font-bold px-4 py-2 rounded-lg flex items-center gap-1">
+          <button className="bg-blue-900 hover:bg-blue-800 text-white text-[10px] font-bold px-4 py-2 rounded-lg flex items-center gap-1">
             <Download className="w-3 h-3" /> Download Attachment
           </button>
         </div>
@@ -149,15 +150,15 @@ function PendingCard({ applicant, onApprove }) {
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 mt-2">
               <button
                 onClick={() => onApprove(applicant)}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-1.5 shadow-sm"
+                className="w-full sm:w-auto justify-center bg-accent hover:bg-accent-dark text-white text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-1.5 shadow-sm"
                 style={{ minHeight: '36px' }}
               >
                 <CheckCircle2 className="w-4 h-4" /> Approve Registration
               </button>
-              <button className="bg-slate-100 hover:bg-slate-200 text-slate-650 text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95 border border-slate-200" style={{ minHeight: '36px' }}>
+              <button className="w-full sm:w-auto justify-center bg-slate-100 hover:bg-slate-200 text-slate-650 text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95 border border-slate-200" style={{ minHeight: '36px' }}>
                 Reject Application
               </button>
             </div>
@@ -179,14 +180,14 @@ function WelcomeCredentialsModal({ credentials, onClose }) {
         </div>
         
         <div>
-          <h3 className="text-base font-bold text-slate-900">Membership Verified Successfully</h3>
+          <h3 className="text-base font-bold text-blue-900">Membership Verified Successfully</h3>
           <p className="text-xs text-slate-500 mt-1">Incremental Member No. allocated & credentials generated.</p>
         </div>
 
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-left space-y-2.5">
           <div className="flex justify-between items-center text-xs">
             <span className="text-slate-450 font-medium">Member No. (Membership ID):</span>
-            <span className="font-mono font-bold text-primary">{credentials.member_id}</span>
+            <span className="font-mono font-bold text-blue-900">{credentials.member_id}</span>
           </div>
           <div className="flex justify-between items-center text-xs border-t border-slate-200 pt-2.5">
             <span className="text-slate-450 font-medium">Username / Login Email:</span>
@@ -207,7 +208,7 @@ function WelcomeCredentialsModal({ credentials, onClose }) {
 
         <button
           onClick={onClose}
-          className="w-full bg-accent hover:bg-accent-dark text-white text-xs font-bold py-1.5 rounded-xl uppercase tracking-wider transition-all duration-200 active:scale-95"
+          className="w-full bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold py-1.5 rounded-xl uppercase tracking-wider transition-all duration-200 active:scale-95"
           style={{ minHeight: '40px' }}
         >
           Confirm Approval
@@ -246,16 +247,16 @@ function EditMemberModal({ member, onClose, onSave }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl relative space-y-4">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+      <form onSubmit={handleSubmit} className="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl relative space-y-4 my-auto">
         <button type="button" onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xs font-bold border rounded-lg p-1.5">
           ✕
         </button>
-        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-          <Edit className="w-4 h-4 text-primary" /> Edit Member Profile
+        <h3 className="text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center gap-2">
+          <Edit className="w-4 h-4 text-blue-900" /> Edit Member Profile
         </h3>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Company Name</label>
             <input type="text" value={company} onChange={e => setCompany(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none" />
@@ -266,7 +267,7 @@ function EditMemberModal({ member, onClose, onSave }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Contact Person</label>
             <input type="text" value={contact} onChange={e => setContact(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none" />
@@ -277,7 +278,7 @@ function EditMemberModal({ member, onClose, onSave }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Phone Mobile</label>
             <input type="text" value={phone} onChange={e => setPhone(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none" />
@@ -292,7 +293,7 @@ function EditMemberModal({ member, onClose, onSave }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">State / Territory</label>
             <select value={stateLoc} onChange={e => setStateLoc(e.target.value)} className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none">
@@ -309,9 +310,9 @@ function EditMemberModal({ member, onClose, onSave }) {
           </div>
         </div>
 
-        <div className="flex gap-2 pt-2">
-          <button type="submit" className="flex-1 bg-primary hover:bg-primary/90 text-white text-xs font-bold py-1.5 rounded-xl transition-all duration-200 active:scale-95 uppercase tracking-wider">
-            Save Modifications
+        <div className="flex gap-3 pt-2">
+          <button type="submit" className="flex-1 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold py-1.5 rounded-xl transition-all duration-200 active:scale-95 uppercase tracking-wider">
+            Save Profile
           </button>
           <button type="button" onClick={onClose} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold py-1.5 rounded-xl border transition-all duration-200 active:scale-95 uppercase tracking-wider">
             Cancel
@@ -334,12 +335,12 @@ function TagInput({ tags, setTags }) {
   return (
     <div>
       <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Business Type Tags</label>
-      <div className="bg-white border border-slate-200 rounded-xl p-2 min-h-[38px] flex flex-wrap gap-2 items-center focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all shadow-sm">
+      <div className="bg-white border border-slate-200 rounded-xl p-2 min-h-[38px] flex flex-wrap gap-2 items-center focus-within:border-slate-900 focus-within:ring-1 focus-within:ring-slate-900/20 transition-all shadow-sm">
         {tags.map(t => (
-          <span key={t} className="flex items-center gap-1 bg-primary/10 text-primary border border-primary/20 font-medium text-[10px] px-2 py-0.5 rounded-md">
+          <span key={t} className="flex items-center gap-1 bg-slate-900/10 text-blue-900 border border-slate-900/20 font-medium text-[10px] px-2 py-0.5 rounded-md">
             <Tag className="w-2.5 h-2.5" />
             {t}
-            <button type="button" onClick={() => remove(t)} className="ml-0.5 hover:text-primary/70">
+            <button type="button" onClick={() => remove(t)} className="ml-0.5 hover:text-blue-900/70">
               <X className="w-2.5 h-2.5" />
             </button>
           </span>
@@ -384,16 +385,16 @@ function AddMemberModal({ onClose, onSave }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl relative space-y-4">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+      <form onSubmit={handleSubmit} className="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl relative space-y-4 my-auto">
         <button type="button" onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-650 text-xs font-bold border rounded-lg p-1.5">
           ✕
         </button>
-        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-          <Plus className="w-4 h-4 text-primary" /> Add New Member Profile
+        <h3 className="text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center gap-2">
+          <Plus className="w-4 h-4 text-blue-900" /> Add New Member Profile
         </h3>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Company Name (Syarikat)</label>
             <input type="text" value={company} onChange={e => setCompany(e.target.value)} required placeholder="e.g. Company Maju Sdn Bhd" className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none" />
@@ -404,7 +405,7 @@ function AddMemberModal({ onClose, onSave }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Business Category</label>
             <select value={category} onChange={e => setCategory(e.target.value)} className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none">
@@ -423,7 +424,7 @@ function AddMemberModal({ onClose, onSave }) {
 
         <TagInput tags={bizTags} setTags={setBizTags} />
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Contact Person</label>
             <input type="text" value={contact} onChange={e => setContact(e.target.value)} required placeholder="e.g. Mohd Fauzi" className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none" />
@@ -434,7 +435,7 @@ function AddMemberModal({ onClose, onSave }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Email Address</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="e.g. fauzi@company.my" className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none" />
@@ -445,8 +446,8 @@ function AddMemberModal({ onClose, onSave }) {
           </div>
         </div>
 
-        <div className="flex gap-2 pt-2">
-          <button type="submit" className="flex-1 bg-primary hover:bg-primary/90 text-white text-xs font-bold py-1.5 rounded-xl transition-all duration-200 active:scale-95 uppercase tracking-wider">
+        <div className="flex gap-3">
+          <button type="submit" className="flex-1 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold py-1.5 rounded-xl transition-all duration-200 active:scale-95 uppercase tracking-wider">
             Register Member
           </button>
           <button type="button" onClick={onClose} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-650 text-xs font-bold py-1.5 rounded-xl border transition-all duration-200 active:scale-95 uppercase tracking-wider">
@@ -494,8 +495,8 @@ function BulkUploadModal({ onClose, onImport }) {
         <button type="button" onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-650 text-xs font-bold border rounded-lg p-1.5">
           ✕
         </button>
-        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 mb-4 shrink-0">
-          <Upload className="w-4 h-4 text-primary" /> Bulk Upload Members
+        <h3 className="text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center gap-2 mb-4 shrink-0">
+          <Upload className="w-4 h-4 text-blue-900" /> Bulk Upload Members
         </h3>
 
         {!file ? (
@@ -559,7 +560,7 @@ function BulkUploadModal({ onClose, onImport }) {
               <button 
                 onClick={handleImport} 
                 disabled={processing || preview.length === 0}
-                className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white text-xs font-bold py-2 rounded-xl transition-all duration-200 active:scale-95 uppercase tracking-wider flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-900 hover:bg-blue-800 disabled:bg-slate-700 disabled:opacity-50 text-white text-xs font-bold py-2 rounded-xl transition-all duration-200 active:scale-95 uppercase tracking-wider flex items-center justify-center gap-2"
               >
                 {processing ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                 {processing ? 'Processing...' : 'Confirm Import'}
@@ -574,6 +575,7 @@ function BulkUploadModal({ onClose, onImport }) {
 
 export default function AdminDashboard({ onToast }) {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [viewTarget, setViewTarget] = useState(null);
   const [pending, setPending] = useState(dbInstance.pendingQueue);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
@@ -1034,7 +1036,7 @@ export default function AdminDashboard({ onToast }) {
       </section>
 
       {/* Tab Switcher */}
-      <div className="flex gap-1.5 bg-slate-100 border border-slate-200 rounded-xl p-1 overflow-x-auto whitespace-nowrap scrollbar-thin shadow-inner">
+      <div className="flex flex-col sm:flex-row gap-1.5 bg-slate-100 border border-slate-200 rounded-xl p-1 shadow-inner">
         {[
           { id: 'dashboard', label: 'Management Dashboard', icon: Shield },
           { id: 'ledger', label: 'Financial Ledger & Override', icon: DollarSign },
@@ -1046,8 +1048,8 @@ export default function AdminDashboard({ onToast }) {
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex-1 min-w-[180px] sm:min-w-0 shrink-0 flex items-center justify-center gap-2 py-1.5 px-3 rounded-lg text-xs font-bold transition-all duration-200
-                ${active ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary hover:bg-slate-50'}`}
+              className={`flex-1 min-w-0 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all duration-200 border border-transparent
+                ${active ? 'bg-blue-900 text-white shadow-md' : 'text-slate-500 hover:text-blue-900 hover:bg-slate-50'}`}
               style={{ minHeight: '38px' }}
             >
               <Icon className="w-4 h-4 shrink-0" />
@@ -1061,7 +1063,7 @@ export default function AdminDashboard({ onToast }) {
         <>
           {/* flex-col on mobile, grid on desktop */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <KPICard icon={Users}      label="Total Members"        value={membersList.length} sub="As of AGM 2026" color="bg-primary/5 text-primary" />
+            <KPICard icon={Users}      label="Total Members"        value={membersList.length} sub="As of AGM 2026" color="bg-slate-900/5 text-blue-900" />
             <KPICard icon={UserCheck}  label="Active (Active)"       value={activeCount}    sub="Paid up"        color="bg-emerald-50 text-emerald-600" />
             <KPICard icon={Clock}      label="Pending Verification" value={pendingCount}   sub="Awaiting review" color="bg-amber-50 text-amber-600" />
             <KPICard icon={DollarSign} label="Total Fees Collected" value={`RM ${totalFees.toLocaleString()}`} sub="FY 2026" color="bg-accent/5 text-accent" />
@@ -1089,16 +1091,18 @@ export default function AdminDashboard({ onToast }) {
             <div className="xl:col-span-3 space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <h2 className="text-sm font-semibold text-slate-800">Global Membership Registry</h2>
-                <div className="flex gap-2 sm:ml-auto">
+                <div className="flex flex-wrap gap-2 sm:ml-auto">
                   <button
                     onClick={() => setShowBulkUpload(true)}
-                    className="flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all duration-200 active:scale-95 shadow-sm"
+                    className="flex items-center gap-1.5 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all duration-200 active:scale-95 shadow-sm"
+                    style={{ minHeight: '36px' }}
                   >
                     <Upload className="w-4 h-4" /> Bulk Upload
                   </button>
                   <button
                     onClick={() => setShowAddModal(true)}
-                    className="flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all duration-200 active:scale-95 shadow-sm"
+                    className="flex items-center gap-1.5 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all duration-200 active:scale-95 shadow-sm"
+                    style={{ minHeight: '36px' }}
                   >
                     <Plus className="w-4 h-4" /> Add Member
                   </button>
@@ -1118,7 +1122,7 @@ export default function AdminDashboard({ onToast }) {
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="Search company name, ssm no, or member ID…"
-                  className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-1.5 text-xs text-slate-700 placeholder-slate-450 focus:outline-none focus:border-primary transition-colors"
+                  className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-1.5 text-xs text-slate-700 placeholder-slate-450 focus:outline-none focus:border-slate-900 transition-colors"
                 />
               </div>
 
@@ -1139,11 +1143,11 @@ export default function AdminDashboard({ onToast }) {
               </div>
 
               {/* Registry Table */}
-              <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-primary">
+              <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-blue-900">
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="border-b border-slate-200 bg-primary/5 text-primary font-bold">
+                      <tr className="border-b border-slate-200 bg-slate-900/5 text-blue-900 font-bold">
                         <th className="text-left px-4 py-1.5 font-semibold">Member No.</th>
                         <th className="text-left px-4 py-1.5 font-semibold">Company Name</th>
                         <th className="text-left px-4 py-1.5 font-semibold hidden sm:table-cell">SSM No</th>
@@ -1156,7 +1160,7 @@ export default function AdminDashboard({ onToast }) {
                     <tbody>
                       {filtered.slice(0, 15).map((m, i) => (
                         <tr key={m.id} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
-                          <td className="px-4 py-1.5 font-mono text-primary font-bold">{m.id}</td>
+                          <td className="px-4 py-1.5 font-mono text-blue-900 font-bold">{m.id}</td>
                           <td className="px-4 py-1.5 text-slate-800 font-bold max-w-[140px] truncate">{m.company}</td>
                           <td className="px-4 py-1.5 text-slate-500 font-mono hidden sm:table-cell">{m.ssm_no}</td>
                           <td className="px-4 py-1.5 text-slate-500 hidden lg:table-cell">{m.state}</td>
@@ -1168,8 +1172,15 @@ export default function AdminDashboard({ onToast }) {
                           </td>
                           <td className="px-4 py-1.5 text-right flex justify-end gap-1.5">
                             <button
+                              onClick={() => setViewTarget(m)}
+                              className="p-1.5 bg-blue-50 border border-blue-100 hover:border-blue-300 rounded-lg text-blue-600 hover:text-blue-800"
+                              title="View Profile"
+                            >
+                              <Eye className="w-3.5 h-3.5" />
+                            </button>
+                            <button
                               onClick={() => setEditTarget(m)}
-                              className="p-1.5 bg-slate-100 border border-slate-200 hover:border-primary rounded-lg text-slate-600 hover:text-primary"
+                              className="p-1.5 bg-slate-100 border border-slate-200 hover:border-slate-900 rounded-lg text-slate-600 hover:text-blue-900"
                               title="Edit Profile"
                             >
                               <Edit className="w-3.5 h-3.5" />
@@ -1210,10 +1221,10 @@ export default function AdminDashboard({ onToast }) {
           
           {/* Offline Override Facility Form */}
           <div className="xl:col-span-2 space-y-4">
-            <div className="card p-5 space-y-4 border-t-2 border-t-accent">
+            <div className="card p-5 space-y-4 border-t-2 border-t-blue-900">
               <div>
                 <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase tracking-wider">
-                  <DollarSign className="w-4.5 h-4.5 text-primary/80" /> Offline Payment Override
+                  <DollarSign className="w-4.5 h-4.5 text-blue-900/80" /> Offline Payment Override
                 </h3>
                 <p className="text-[10px] text-slate-500 leading-relaxed mt-1">
                   Log offline transactions (cash/cheque) directly. Fills database tables, shifts memberships to "Active", and extends validation periods.
@@ -1238,7 +1249,7 @@ export default function AdminDashboard({ onToast }) {
                   </select>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[10px] font-bold text-slate-450 uppercase mb-1">Renewal Year</label>
                     <select
@@ -1277,8 +1288,8 @@ export default function AdminDashboard({ onToast }) {
                 </div>
 
                 <button
-                  type="submit"
-                  className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 shadow-sm"
+                  onClick={handleOfflineOverride}
+                  className="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 shadow-sm"
                   style={{ minHeight: '40px' }}
                 >
                   Apply Override & Renew
@@ -1287,7 +1298,7 @@ export default function AdminDashboard({ onToast }) {
             </div>
 
             {/* Simulated Webhook Trigger Console */}
-            <div className="card p-5 bg-slate-900 border border-slate-800 text-white space-y-4 border-t-2 border-t-accent">
+            <div className="card p-5 bg-slate-900 border border-slate-800 text-white space-y-4 border-t-2 border-t-blue-900">
               <div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-xs font-bold text-accent flex items-center gap-2 uppercase tracking-wider">
@@ -1316,7 +1327,7 @@ export default function AdminDashboard({ onToast }) {
                   </select>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Amount (RM)</label>
                     <input
@@ -1340,8 +1351,8 @@ export default function AdminDashboard({ onToast }) {
                 <button
                   onClick={triggerSimulatedWebhook}
                   disabled={webhookProcessing}
-                  className="w-full bg-primary/90 hover:bg-primary disabled:opacity-40 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-primary/10"
-                  style={{ minHeight: '38px' }}
+                  className="w-full bg-slate-800 hover:bg-slate-900 disabled:opacity-40 text-white font-bold py-1.5 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-slate-900/10"
+                  style={{ minHeight: '40px' }}
                 >
                   {webhookProcessing ? (
                     <>
@@ -1361,11 +1372,11 @@ export default function AdminDashboard({ onToast }) {
           <div className="xl:col-span-3 space-y-3">
             <h2 className="text-sm font-semibold text-slate-800">Financial Ledger logs ({paymentsList.length} records)</h2>
             
-            <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-primary">
+            <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-blue-900">
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 bg-primary/5 text-primary font-bold">
+                    <tr className="border-b border-slate-200 bg-slate-900/5 text-blue-900 font-bold">
                       <th className="text-left px-4 py-1.5 font-semibold">Payment ID</th>
                       <th className="text-left px-4 py-1.5 font-semibold">Member</th>
                       <th className="text-left px-4 py-1.5 font-semibold">Year</th>
@@ -1404,12 +1415,12 @@ export default function AdminDashboard({ onToast }) {
       {activeTab === 'reports' && (
         <div className="space-y-6 animate-fade-in">
           {/* Report Title & Header */}
-          <div className="card p-5 relative overflow-hidden bg-white border border-slate-200 border-t-2 border-t-accent">
+          <div className="card p-5 relative overflow-hidden bg-white border border-slate-200 border-t-2 border-t-blue-900">
             <div className="absolute inset-0 opacity-5" style={{ background: 'radial-gradient(circle at top right, #e42b40, transparent 70%)' }} />
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h2 className="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
-                  <PieChart className="w-5 h-5 text-primary/80" /> Report Generator & Analytics
+                  <PieChart className="w-5 h-5 text-blue-900/80" /> Report Generator & Analytics
                 </h2>
                 <p className="text-xs text-slate-500 font-medium">Generate compliance summaries, filter sector groups, and export subsets.</p>
               </div>
@@ -1417,7 +1428,7 @@ export default function AdminDashboard({ onToast }) {
                 <button
                   onClick={handleExportReport}
                   disabled={reportFiltered.length === 0}
-                  className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95"
+                  className="flex items-center justify-center gap-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95"
                   style={{ minHeight: '38px' }}
                 >
                   <Download className="w-4 h-4" /> Export CSV ({reportFiltered.length})
@@ -1428,14 +1439,14 @@ export default function AdminDashboard({ onToast }) {
                   className="flex items-center justify-center gap-2 bg-white border border-slate-200 hover:border-slate-350 text-slate-700 text-xs font-bold px-4 py-1.5 rounded-xl transition-all duration-200 active:scale-95"
                   style={{ minHeight: '38px' }}
                 >
-                  <FileText className="w-4 h-4 text-primary/80" /> Print PDF Report
+                  <FileText className="w-4 h-4 text-blue-900/80" /> Print PDF Report
                 </button>
               </div>
             </div>
           </div>
 
           {/* Interactive Filters Grid */}
-          <div className="card p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white border border-slate-200 border-t-2 border-t-primary">
+          <div className="card p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white border border-slate-200 border-t-2 border-t-blue-900">
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-slate-450 uppercase tracking-wide flex items-center gap-1">
                 <Filter className="w-3.5 h-3.5 text-slate-400" /> Category
@@ -1443,7 +1454,7 @@ export default function AdminDashboard({ onToast }) {
               <select
                 value={reportCategory}
                 onChange={e => setReportCategory(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-primary"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-slate-900"
               >
                 <option value="All">All Categories ({membersList.length})</option>
                 <option value="Ordinary">Ordinary</option>
@@ -1459,7 +1470,7 @@ export default function AdminDashboard({ onToast }) {
               <select
                 value={reportStatus}
                 onChange={e => setReportStatus(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-primary"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-slate-900"
               >
                 <option value="All">All Statuses</option>
                 <option value="Active">Active</option>
@@ -1475,7 +1486,7 @@ export default function AdminDashboard({ onToast }) {
               <select
                 value={reportSector}
                 onChange={e => setReportSector(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-primary"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-slate-900"
               >
                 {sectorsList.map(sec => (
                   <option key={sec} value={sec}>
@@ -1488,19 +1499,19 @@ export default function AdminDashboard({ onToast }) {
 
           {/* Report KPIs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <KPICard icon={Users}      label="Matched Members"      value={reportStats.total} sub="Matching filters" color="bg-primary/5 text-primary" />
+            <KPICard icon={Users}      label="Matched Members"      value={reportStats.total} sub="Matching filters" color="bg-slate-900/5 text-blue-900" />
             <KPICard icon={DollarSign} label="Revenue Collected"    value={`RM ${reportStats.fees.toLocaleString()}`} sub="From matching payments" color="bg-emerald-50 text-emerald-600" />
             <KPICard icon={Clock}      label="Outstanding Dues"     value={`RM ${reportStats.outstanding.toLocaleString()}`} sub="Remaining outstanding" color="bg-rose-50 text-rose-600" />
-            <KPICard icon={TrendingUp} label="Compliance Rate"      value={`${reportStats.complianceRate}%`} sub="Paid status fraction" color="bg-primary/5 text-primary" />
+            <KPICard icon={TrendingUp} label="Compliance Rate"      value={`${reportStats.complianceRate}%`} sub="Paid status fraction" color="bg-slate-900/5 text-blue-900" />
           </div>
 
           {/* Visualizations Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             
             {/* Category distribution */}
-            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-primary">
+            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-blue-900">
               <h3 className="text-xs font-bold text-slate-850 uppercase tracking-wide flex items-center gap-2">
-                <PieChart className="w-4 h-4 text-primary/80" /> Category Distribution
+                <PieChart className="w-4 h-4 text-blue-900/80" /> Category Distribution
               </h3>
               <div className="space-y-3">
                 {Object.entries(reportStats.categories).map(([catName, data]) => (
@@ -1512,7 +1523,7 @@ export default function AdminDashboard({ onToast }) {
                     <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${
-                          catName === 'Ordinary' ? 'bg-primary' : catName === 'Associate' ? 'bg-accent/90' : 'bg-emerald-500'
+                          catName === 'Ordinary' ? 'bg-slate-900' : catName === 'Associate' ? 'bg-accent/90' : 'bg-emerald-500'
                         }`}
                         style={{ width: `${data.percent}%` }}
                       />
@@ -1523,9 +1534,9 @@ export default function AdminDashboard({ onToast }) {
             </div>
 
             {/* Sector representation */}
-            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-primary">
+            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-blue-900">
               <h3 className="text-xs font-bold text-slate-850 uppercase tracking-wide flex items-center gap-2">
-                <Briefcase className="w-4 h-4 text-primary/80" /> Top Industry Representation
+                <Briefcase className="w-4 h-4 text-blue-900/80" /> Top Industry Representation
               </h3>
               <div className="space-y-3">
                 {reportStats.topSectors.length === 0 ? (
@@ -1539,7 +1550,7 @@ export default function AdminDashboard({ onToast }) {
                       </div>
                       <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
                         <div
-                          className="h-full rounded-full bg-primary transition-all duration-500"
+                          className="h-full rounded-full bg-slate-900 transition-all duration-500"
                           style={{ width: `${s.percent}%` }}
                         />
                       </div>
@@ -1550,9 +1561,9 @@ export default function AdminDashboard({ onToast }) {
             </div>
 
             {/* SQL DDL Schema Viewer */}
-            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-accent">
+            <div className="card p-5 space-y-4 bg-white border border-slate-200 border-t-2 border-t-blue-900">
               <h3 className="text-xs font-bold text-slate-850 uppercase tracking-wide flex items-center gap-2">
-                <Database className="w-4.5 h-4.5 text-primary/80" /> Supabase Database Schema Console
+                <Database className="w-4.5 h-4.5 text-blue-900/80" /> Supabase Database Schema Console
               </h3>
               <p className="text-[10px] text-slate-500 leading-normal">
                 Review verified Postgres database structures and RLS rules integrated with this Progressive Web App.
@@ -1595,11 +1606,11 @@ export default function AdminDashboard({ onToast }) {
           {/* Filtered List Preview */}
           <div className="space-y-3">
             <h3 className="text-xs font-bold text-slate-550 uppercase tracking-wide">Matching Records Preview ({reportFiltered.length})</h3>
-            <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-primary">
+            <div className="card overflow-hidden bg-white border border-slate-200 border-t-2 border-t-blue-900">
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 bg-primary/5 text-primary font-bold">
+                    <tr className="border-b border-slate-200 bg-slate-900/5 text-blue-900 font-bold">
                       <th className="text-left px-4 py-1.5 font-semibold">Member No.</th>
                       <th className="text-left px-4 py-1.5 font-semibold">Company Name</th>
                       <th className="text-left px-4 py-1.5 font-semibold">Sector</th>
@@ -1611,7 +1622,7 @@ export default function AdminDashboard({ onToast }) {
                   <tbody>
                     {reportFiltered.slice(0, 15).map((m, i) => (
                       <tr key={m.id} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
-                        <td className="px-4 py-1.5 font-mono text-primary font-bold">{m.id}</td>
+                        <td className="px-4 py-1.5 font-mono text-blue-900 font-bold">{m.id}</td>
                         <td className="px-4 py-1.5 text-slate-850 font-bold max-w-[180px] truncate">{m.company}</td>
                         <td className="px-4 py-1.5 text-slate-500">{m.type}</td>
                         <td className="px-4 py-1.5 text-slate-500">{m.category}</td>
@@ -1642,6 +1653,9 @@ export default function AdminDashboard({ onToast }) {
           </div>
         </div>
       )}
+
+      {/* Profile View Modal */}
+      <MemberProfileModal member={viewTarget} onClose={() => setViewTarget(null)} />
     </div>
   );
 }

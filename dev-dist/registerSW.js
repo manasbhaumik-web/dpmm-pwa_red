@@ -1,1 +1,1 @@
-if('serviceWorker' in navigator) navigator.serviceWorker.register('/dpmm-pwa/dev-sw.js?dev-sw', { scope: '/dpmm-pwa/', type: 'classic' })
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/dpmm-pwa_red/dev-sw.js?dev-sw', { scope: '/dpmm-pwa_red/', type: 'classic' })

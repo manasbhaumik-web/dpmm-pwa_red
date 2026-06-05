@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 const dpmmLogo = `${import.meta.env.BASE_URL}logo.png`;
 const dpmmTextLogo = `${import.meta.env.BASE_URL}dpmm-white-text.png`;
-import { Shield, User, LogOut, Globe } from 'lucide-react';
+import { Shield, User, LogOut, Globe, Book } from 'lucide-react';
 import { ToastContainer } from './components/shared/Toast';
 import InstallPrompt from './components/shared/InstallPrompt';
 import LoginPage from './components/auth/LoginPage';
@@ -9,6 +9,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import MemberPortal from './components/member/MemberPortal';
 import LandingPage from './components/public/LandingPage';
 import RegistrationForm from './components/public/RegistrationForm';
+import UserGuidePage from './components/public/UserGuidePage';
 
 const ROLES = [
   {
@@ -24,16 +25,27 @@ const ROLES = [
     activeText: 'text-white',
   },
   {
+    id: 'guide',
+    label: 'Guide',
+    fullLabel: 'User Guide',
+    sub: 'Application Manual',
+    icon: Book,
+    color: 'text-emerald-700',
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-100',
+    activeBg: 'bg-emerald-600',
+    activeText: 'text-white',
+  },
+  {
     id: 'admin',
     label: 'Admin',
     fullLabel: 'Admin Workspace',
     sub: 'Association Manager',
     icon: Shield,
-    // DPMM accent red
-    color: 'text-accent',
-    bg: 'bg-accent/10',
-    border: 'border-accent/20',
-    activeBg: 'bg-accent',
+    color: 'text-blue-900',
+    bg: 'bg-blue-900/10',
+    border: 'border-blue-900/20',
+    activeBg: 'bg-blue-900',
     activeText: 'text-white',
   },
   {
@@ -42,10 +54,10 @@ const ROLES = [
     fullLabel: 'Member Portal',
     sub: 'Authenticated Member',
     icon: User,
-    color: 'text-primary',
-    bg: 'bg-primary/5',
-    border: 'border-primary/20',
-    activeBg: 'bg-primary',
+    color: 'text-blue-900',
+    bg: 'bg-blue-900/10',
+    border: 'border-blue-900/20',
+    activeBg: 'bg-blue-900',
     activeText: 'text-white',
   },
 ];
@@ -54,8 +66,28 @@ const DEFAULT_AUTH = { admin: false, member: false };
 let toastCounter = 0;
 
 export default function App() {
-  const [role, setRole] = useState('public');
-  const [auth, setAuth] = useState(DEFAULT_AUTH);
+  const [role, setRole] = useState(() => {
+    return sessionStorage.getItem('dpmm_role') || 'public';
+  });
+  const [auth, setAuth] = useState(() => {
+    const saved = sessionStorage.getItem('dpmm_auth');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return DEFAULT_AUTH;
+      }
+    }
+    return DEFAULT_AUTH;
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('dpmm_role', role);
+  }, [role]);
+
+  useEffect(() => {
+    sessionStorage.setItem('dpmm_auth', JSON.stringify(auth));
+  }, [auth]);
   const [toasts, setToasts] = useState([]);
   const [showRegistration, setShowRegistration] = useState(false);
 
@@ -75,7 +107,11 @@ export default function App() {
   };
 
   const handleLoginSuccess = (authRole) => {
-    setAuth(a => ({ ...a, [authRole]: true }));
+    setRole(authRole);
+    setAuth(prev => ({
+      ...prev,
+      [authRole]: true
+    }));
     addToast({
       type: 'success',
       title: authRole === 'admin' ? 'Admin Access Granted' : 'Welcome Back!',
@@ -114,57 +150,75 @@ export default function App() {
         className="sticky top-0 z-50 border-b border-slate-200"
         style={{
           paddingTop: 'env(safe-area-inset-top, 0px)',
-          background: 'linear-gradient(135deg, #1e2e70 0%, #263a8d 60%, #2d45a9 100%)',
+          background: 'linear-gradient(135deg, #b62233 0%, #e42b40 60%, #ff334c 100%)',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 h-[70px] flex items-center justify-between gap-3">
 
           {/* DPMM Logo — text version on dark navy header */}
-          <div className="flex items-center gap-3 shrink-0">
+          <button
+            onClick={() => setRole('public')}
+            className="flex items-center gap-3 shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+            aria-label="Home"
+          >
             <img
               src={dpmmTextLogo}
               alt="DPMM Text Logo"
               className="h-10 sm:h-14 object-contain drop-shadow-md"
             />
-          </div>
+          </button>
 
-          {/* Desktop tab switcher (hidden on mobile — bottom bar used instead) */}
-          <nav className="hidden md:flex items-center gap-2">
-            {ROLES.map(r => {
-              const active = role === r.id;
-              return (
-                <button
-                  key={r.id}
-                  onClick={() => handleRoleChange(r.id)}
-                  className={`relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                    ${active ? 'text-white bg-white/20 shadow-inner' : 'text-white/70 hover:text-white hover:bg-white/10'}`}
-                >
-                  <r.icon className="w-4 h-4" />
-                  {r.fullLabel}
-                  <span className={`w-1.5 h-1.5 rounded-full ${isAuthed(r.id) ? 'bg-emerald-400' : 'bg-white/30'}`} />
-                </button>
-              );
-            })}
-          </nav>
 
-          {/* Right: Sign Out + status */}
+          {/* Right: Actions + status */}
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setRole('public')}
+              className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                         border border-white hover:border-rose-100
+                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+              style={{ minHeight: '36px' }}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Home</span>
+            </button>
+            <button
+              onClick={() => setRole('guide')}
+              className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                         border border-white hover:border-rose-100
+                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+              style={{ minHeight: '36px' }}
+            >
+              <Book className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Guide</span>
+            </button>
+            {!showSignOut && (
+              <button
+                onClick={() => setRole('member')}
+                className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                           border border-white hover:border-rose-100
+                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+                style={{ minHeight: '36px' }}
+              >
+                <User className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Login</span>
+              </button>
+            )}
             {showSignOut && (
               <button
                 onClick={() => handleLogout(role)}
-                className="flex items-center gap-1.5 text-xs text-white/70 hover:text-white
-                           border border-white/20 hover:border-white/40
-                           px-3 py-2 rounded-xl transition-all duration-200 bg-white/10"
+                className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                           border border-white hover:border-rose-100
+                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
                 style={{ minHeight: '36px' }}
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Sign Out</span>
               </button>
             )}
-            <div className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-semibold
-              bg-white/10 border-white/20 text-white`}>
+            <div className={`hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full border text-[10px] font-bold shadow-sm
+              bg-white border-white text-rose-800`}>
               <span className={`w-1.5 h-1.5 rounded-full animate-pulse
-                ${showSignOut ? 'bg-emerald-400' : 'bg-white/40'}`}
+                ${showSignOut ? 'bg-emerald-500' : 'bg-rose-400'}`}
               />
               {getStatusLabel()}
             </div>
@@ -200,6 +254,13 @@ export default function App() {
                 onRegister={() => setShowRegistration(true)}
               />
             )}
+          </div>
+        )}
+
+        {/* User Guide */}
+        {role === 'guide' && (
+          <div className="animate-fade-in">
+            <UserGuidePage />
           </div>
         )}
 
@@ -244,7 +305,7 @@ export default function App() {
       <nav
         className="md:hidden fixed bottom-0 inset-x-0 z-50 border-t border-slate-200 bottom-nav"
         style={{
-          background: 'linear-gradient(135deg, #1e2e70 0%, #263a8d 100%)',
+          background: '#0f172a',
           paddingLeft: 'env(safe-area-inset-left,0px)',
           paddingRight: 'env(safe-area-inset-right,0px)',
         }}
@@ -302,12 +363,14 @@ export default function App() {
       {/* ── Footer (desktop only) ─────────────────────────────── */}
       <footer
         className="hidden md:block border-t py-4 px-4"
-        style={{ borderColor: '#1e2e70', background: 'linear-gradient(135deg, #1e2e70 0%, #263a8d 100%)' }}
+        style={{ borderColor: '#0f172a', background: '#0f172a' }}
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <img src={dpmmLogo} alt="DPMM" className="w-5 h-5 object-contain opacity-80" />
-            <p className="text-[11px] text-white/60">© 2026 Dewan Perniagaan Melayu Malaysia (DPMM) · Hak Cipta Terpelihara</p>
+            <p className="text-[11px] text-white/60">
+              © 2026 Dewan Perniagaan Melayu Malaysia (DPMM) · Hak Cipta Terpelihara · <a href="https://dpmm.org.my" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">dpmm.org.my</a>
+            </p>
           </div>
           <p className="text-[11px] text-white/40">Sistem v2.0.0 · Dibina dengan React + Tailwind CSS</p>
         </div>
