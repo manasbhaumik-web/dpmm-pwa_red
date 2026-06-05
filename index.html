@@ -6,6 +6,30 @@
 
     <!-- Primary Meta -->
     <meta name="description" content="Sistem Pengurusan Keahlian Digital Dewan Perniagaan Melayu Malaysia (DPMM) — Platform PWA rasmi untuk memperkasa usahawan Melayu Malaysia." />
+    
+    <!-- Auto-Clear Cache Script -->
+    <script>
+      // Immediately unregister all Service Workers to prevent stale PWA caching
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+            console.log('ServiceWorker unregistered successfully');
+          }
+        }).catch(function(err) {
+          console.log('ServiceWorker unregistration failed: ', err);
+        });
+      }
+      
+      // Delete all CacheStorage (offline files) to force fresh load
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (let name of names) {
+            caches.delete(name);
+          }
+        });
+      }
+    </script>
     <meta name="keywords" content="DPMM, dewan perniagaan melayu malaysia, keahlian, usahawan melayu, PWA, business association, malaysia" />
     <meta name="author" content="Dewan Perniagaan Melayu Malaysia (DPMM)" />
     <meta name="google" content="notranslate" />
