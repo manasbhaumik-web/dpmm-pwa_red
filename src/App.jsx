@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 const dpmmLogo = `${import.meta.env.BASE_URL}logo.png`;
 const dpmmTextLogo = `${import.meta.env.BASE_URL}dpmm-white-text.png`;
-import { Shield, User, LogOut, Globe } from 'lucide-react';
+import { Shield, User, LogOut, Globe, Book } from 'lucide-react';
 import { ToastContainer } from './components/shared/Toast';
 import InstallPrompt from './components/shared/InstallPrompt';
 import LoginPage from './components/auth/LoginPage';
@@ -9,6 +9,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import MemberPortal from './components/member/MemberPortal';
 import LandingPage from './components/public/LandingPage';
 import RegistrationForm from './components/public/RegistrationForm';
+import UserGuidePage from './components/public/UserGuidePage';
 
 const ROLES = [
   {
@@ -21,6 +22,18 @@ const ROLES = [
     bg: 'bg-indigo-50',
     border: 'border-indigo-100',
     activeBg: 'bg-indigo-600',
+    activeText: 'text-white',
+  },
+  {
+    id: 'guide',
+    label: 'Guide',
+    fullLabel: 'User Guide',
+    sub: 'Application Manual',
+    icon: Book,
+    color: 'text-emerald-700',
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-100',
+    activeBg: 'bg-emerald-600',
     activeText: 'text-white',
   },
   {
@@ -148,6 +161,16 @@ export default function App() {
               <Globe className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Home</span>
             </button>
+            <button
+              onClick={() => setRole('guide')}
+              className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                         border border-white hover:border-rose-100
+                         px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md"
+              style={{ minHeight: '36px' }}
+            >
+              <Book className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Guide</span>
+            </button>
             {!showSignOut && (
               <button
                 onClick={() => setRole('member')}
@@ -211,6 +234,13 @@ export default function App() {
                 onRegister={() => setShowRegistration(true)}
               />
             )}
+          </div>
+        )}
+
+        {/* User Guide */}
+        {role === 'guide' && (
+          <div className="animate-fade-in">
+            <UserGuidePage />
           </div>
         )}
 
