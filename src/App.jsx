@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 const dpmmLogo = `${import.meta.env.BASE_URL}logo.png`;
 const dpmmTextLogo = `${import.meta.env.BASE_URL}dpmm-white-text.png`;
-import { Shield, User, LogOut, Globe, Book } from 'lucide-react';
+import { Shield, User, LogOut, Globe, Book, Search } from 'lucide-react';
 import { ToastContainer } from './components/shared/Toast';
 import LoginPage from './components/auth/LoginPage';
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -9,6 +9,7 @@ import MemberPortal from './components/member/MemberPortal';
 import LandingPage from './components/public/LandingPage';
 import RegistrationForm from './components/public/RegistrationForm';
 import UserGuidePage from './components/public/UserGuidePage';
+import DirectoryPage from './components/public/DirectoryPage';
 import React from 'react';
 
 const ROLES = [
@@ -22,6 +23,18 @@ const ROLES = [
     bg: 'bg-indigo-50',
     border: 'border-indigo-100',
     activeBg: 'bg-indigo-600',
+    activeText: 'text-white',
+  },
+  {
+    id: 'directory',
+    label: 'Directory',
+    fullLabel: 'Member Directory',
+    sub: 'Search Members',
+    icon: Search,
+    color: 'text-amber-700',
+    bg: 'bg-amber-50',
+    border: 'border-amber-100',
+    activeBg: 'bg-amber-600',
     activeText: 'text-white',
   },
   {
@@ -111,7 +124,7 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-const DEFAULT_AUTH = { admin: false, member: false };
+const DEFAULT_AUTH = { admin: false, member: false, adminType: null, adminState: null };
 let toastCounter = 0;
 
 export default function App() {
@@ -155,23 +168,36 @@ export default function App() {
     setRole(id);
   };
 
-  const handleLoginSuccess = (authRole) => {
-    setRole(authRole);
+  const handleLoginSuccess = (authRole, authDetails) => {
+    // If they logged in as state_admin, map it to 'admin' role but store type and state
+    const roleId = authRole.includes('admin') ? 'admin' : authRole;
+    
+    setRole(roleId);
     setAuth(prev => ({
       ...prev,
-      [authRole]: true
+      [roleId]: true,
+      ...(roleId === 'admin' && authDetails ? {
+        adminType: authDetails.type,
+        adminState: authDetails.stateLoc
+      } : {})
     }));
     addToast({
       type: 'success',
-      title: authRole === 'admin' ? 'Admin Access Granted' : 'Welcome Back!',
-      message: authRole === 'admin'
-        ? 'Signed in as Association Manager.'
+      title: roleId === 'admin' ? 'Admin Access Granted' : 'Welcome Back!',
+      message: roleId === 'admin'
+        ? (authDetails?.type === 'state' ? `Signed in as State Admin (${authDetails.stateLoc}).` : 'Signed in as Association Manager.')
         : 'Signed in as Iskandar Putra · DPMM-2026-0042',
     });
   };
 
-  const handleLogout = (authRole) => {
-    setAuth(a => ({ ...a, [authRole]: false }));
+  const handleLogout = () => {
+    if (isAdminAuthed) {
+      setAuth(a => ({ ...a, admin: false, adminType: null, adminState: null }));
+      setRole('public');
+    } else if (isMemberAuthed) {
+      setAuth(a => ({ ...a, member: false }));
+      setRole('public');
+    }
     addToast({ type: 'info', title: 'Signed Out', message: 'You have been signed out successfully.' });
   };
 
@@ -188,7 +214,7 @@ export default function App() {
     return 'Unauthenticated';
   };
 
-  const showSignOut = (role === 'admin' && isAdminAuthed) || (role === 'member' && isMemberAuthed);
+  const showSignOut = isAdminAuthed || isMemberAuthed;
 
   return (
     <ErrorBoundary>
@@ -241,6 +267,18 @@ export default function App() {
               <Book className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Guide</span>
             </button>
+            {isAdminAuthed && (
+              <button
+                onClick={() => setRole('directory')}
+                className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
+                           border border-white hover:border-rose-100
+                           px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md opacity-70 hover:opacity-100"
+                style={{ minHeight: '36px' }}
+              >
+                <Search className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Directory</span>
+              </button>
+            )}
             {!showSignOut && (
               <button
                 onClick={() => setRole('member')}
@@ -255,7 +293,7 @@ export default function App() {
             )}
             {showSignOut && (
               <button
-                onClick={() => handleLogout(role)}
+                onClick={handleLogout}
                 className="flex items-center gap-1.5 text-xs text-rose-700 hover:text-rose-800 font-bold
                            border border-white hover:border-rose-100
                            px-4 py-2 rounded-xl transition-all duration-200 bg-white shadow-sm hover:shadow-md opacity-70 hover:opacity-100"
@@ -302,6 +340,7 @@ export default function App() {
             ) : (
               <LandingPage
                 onRegister={() => setShowRegistration(true)}
+                onLogin={() => setRole('member')}
               />
             )}
           </div>
@@ -314,11 +353,34 @@ export default function App() {
           </div>
         )}
 
+        {/* Directory */}
+        {role === 'directory' && (
+          <div className="animate-fade-in">
+            {isAdminAuthed ? (
+               <DirectoryPage adminType={auth.adminType} adminState={auth.adminState} onBack={() => setRole('admin')} />
+            ) : (
+               <div className="p-8 text-center mt-10">
+                 <div className="bg-white rounded-2xl shadow-sm border border-rose-200 p-8 max-w-lg mx-auto inline-block">
+                    <Shield className="w-12 h-12 text-rose-600 mx-auto mb-4" />
+                    <h2 className="text-xl font-bold text-rose-700 mb-2">Access Restricted</h2>
+                    <p className="text-slate-600 text-sm mb-6">The Member Directory is only accessible to Association Administrators.</p>
+                    <button 
+                      onClick={() => setRole('admin')}
+                      className="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-6 rounded-xl transition-all shadow-sm"
+                    >
+                      Login as Admin
+                    </button>
+                 </div>
+               </div>
+            )}
+          </div>
+        )}
+
         {/* Admin Workspace */}
         {role === 'admin' && (
           <div className="animate-fade-in">
             {isAdminAuthed ? (
-              <AdminDashboard onToast={addToast} />
+              <AdminDashboard onToast={addToast} adminType={auth.adminType} adminState={auth.adminState} />
             ) : (
               <LoginPage
                 defaultRole="admin"
@@ -360,7 +422,7 @@ export default function App() {
         }}
       >
         <div className="flex items-stretch">
-          {ROLES.map(r => {
+          {ROLES.filter(r => r.id !== 'directory' || isAdminAuthed).map(r => {
             const active = role === r.id;
             const authed = isAuthed(r.id);
             return (
@@ -397,7 +459,7 @@ export default function App() {
           {/* Sign Out tab — only visible when authed on admin/member */}
           {showSignOut && (
             <button
-              onClick={() => handleLogout(role)}
+              onClick={handleLogout}
               className="flex-shrink-0 w-14 flex flex-col items-center justify-center gap-1 py-3 text-white/60 hover:text-white transition-colors border-l border-white/10"
               style={{ minHeight: '56px' }}
               aria-label="Sign Out"

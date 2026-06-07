@@ -4,7 +4,8 @@ import {
   Clock, CreditCard, ChevronRight, Star, Search, SlidersHorizontal, User, Lock, Upload, Printer, FileText
 } from 'lucide-react';
 import { dbInstance, MALAYSIAN_STATES } from '../../data/mockData';
-import { PaymentModal, CommunityWidget, B2BCard } from './MemberWidgets';
+import { PaymentModal } from './MemberWidgets';
+import B2BDirectoryPage from './B2BDirectoryPage';
 
 const SECTORS = ['All', 'IT Services', 'Logistics', 'Construction', 'Energy', 'F&B', 'Healthcare', 'Creative', 'Agriculture', 'Engineering', 'Property'];
 
@@ -42,74 +43,7 @@ function ReceiptRow({ receipt, onDownload }) {
   );
 }
 
-function B2BTab({ memberStatus, memberState, memberId }) {
-  const [search, setSearch] = useState('');
-  const [sector, setSector] = useState('All');
-
-  // Load from dbInstance to reflect any updates dynamically
-  const peers = dbInstance.members
-    .filter(m => m.status === 'Active' && m.state === memberState && m.member_id !== memberId)
-    .map(m => ({
-      id: m.member_id,
-      company: m.company_name,
-      sector: m.business_type,
-      desc: `${m.category} member offering services in ${m.business_type} sector.`,
-      phone: m.phone_mobile.replace('+', ''),
-      verified: true
-    }));
-
-  const filtered = peers.filter(p => {
-    const matchSearch = p.company.toLowerCase().includes(search.toLowerCase()) ||
-      p.desc.toLowerCase().includes(search.toLowerCase());
-    const matchSector = sector === 'All' || p.sector === sector;
-    return matchSearch && matchSector;
-  });
-
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-base font-bold text-slate-800 mb-1">B2B Matchmaking Directory</h2>
-        <p className="text-xs text-slate-500">Connect directly with verified corporate members in the association network.</p>
-      </div>
-
-      <CommunityWidget isActive={memberStatus === 'Active'} />
-
-      <div className="flex gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Search verified businesses by name or services…"
-            className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-1.5 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors"
-          />
-        </div>
-      </div>
-
-      <div className="flex gap-2 overflow-x-auto scrollbar-thin pb-1">
-        {SECTORS.map(s => (
-          <button
-            key={s}
-            onClick={() => setSector(s)}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-200 shrink-0
-              ${sector === s ? 'bg-accent border-accent text-white shadow-sm hover:bg-accent-dark hover:border-accent-dark' : 'bg-white border-slate-200 text-slate-550 hover:border-slate-350'}`}
-          >
-            {s}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filtered.map(peer => <B2BCard key={peer.id} peer={peer} />)}
-        {filtered.length === 0 && (
-          <div className="col-span-full text-center py-12 bg-white border border-slate-200 rounded-2xl">
-            <p className="text-slate-500 text-xs">No business profiles match the query "{search}".</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+// SECTORS array and B2BTab removed as B2BDirectoryPage is now used.
 
 // Interactive print-ready Receipt PDF Modal
 function ReceiptPdfModal({ receipt, onClose }) {
@@ -721,7 +655,7 @@ export default function MemberPortal({ onToast }) {
           </div>
         )}
 
-        {activeTab === 'b2b' && <B2BTab memberStatus={member.status} memberState={member.state} memberId={member.id} />}
+        {activeTab === 'b2b' && <B2BDirectoryPage memberId={member.id} />}
       </div>
     </>
   );

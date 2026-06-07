@@ -6,6 +6,11 @@ import {
 export default function MemberProfileModal({ member, onClose }) {
   if (!member) return null;
 
+  const companyName = member.company || member.company_name || 'N/A';
+  const memberId = member.id || member.member_id || 'N/A';
+  const businessType = member.business_type || member.type || 'N/A';
+  const phoneMobile = member.phone || member.phone_mobile || 'N/A';
+
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm">
       <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl animate-fade-in relative">
@@ -13,12 +18,12 @@ export default function MemberProfileModal({ member, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between p-5 sm:p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-md">
-              {member.company.charAt(0)}
+            <div className="w-12 h-12 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-md uppercase">
+              {companyName.charAt(0)}
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-800 leading-tight">{member.company}</h2>
-              <p className="text-xs text-slate-500 font-medium">SSM: {member.ssm_no} · ID: <span className="font-mono text-blue-900 font-bold">{member.id}</span></p>
+              <h2 className="text-lg font-bold text-slate-800 leading-tight">{companyName}</h2>
+              <p className="text-xs text-slate-500 font-medium">SSM: {member.ssm_no} · ID: <span className="font-mono text-blue-900 font-bold">{memberId}</span></p>
             </div>
           </div>
           <button
@@ -69,7 +74,7 @@ export default function MemberProfileModal({ member, onClose }) {
               <div className="space-y-3">
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase">Sector / Industry</p>
-                  <p className="text-sm font-semibold text-slate-700">{member.business_type || 'N/A'}</p>
+                  <p className="text-sm font-semibold text-slate-700">{businessType}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase">Membership Category</p>
@@ -103,7 +108,7 @@ export default function MemberProfileModal({ member, onClose }) {
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase">Phone Numbers</p>
                   <p className="text-sm font-medium text-slate-700 flex flex-col gap-1 mt-0.5">
-                    <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-slate-400" /> {member.phone_mobile} (Mobile)</span>
+                    <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-slate-400" /> {phoneMobile} (Mobile)</span>
                     <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-slate-400" /> {member.phone_office || 'N/A'} (Office)</span>
                   </p>
                 </div>

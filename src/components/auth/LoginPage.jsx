@@ -6,7 +6,8 @@ import {
 } from 'lucide-react';
 
 const CREDENTIALS = {
-  admin: { email: 'admin@dpmm.org.my', password: 'admin123' },
+  admin: { email: 'admin@dpmm.org.my', password: 'admin123', type: 'global' },
+  state_admin: { email: 'selangor@dpmm.org.my', password: 'admin123', type: 'state', stateLoc: 'Selangor' },
   member: { email: 'iskandar@horizondynamics.my', password: 'member123' },
 };
 
@@ -14,7 +15,7 @@ const ROLES = [
   {
     id: 'admin',
     label: 'Admin Login',
-    sub: 'Association Manager',
+    sub: 'Association & Branch Managers',
     icon: Shield,
     accentBg: 'bg-blue-900',
     accentHover: 'hover:bg-blue-800',
@@ -25,6 +26,8 @@ const ROLES = [
     gradient: 'from-blue-900/10 to-transparent',
     demoEmail: 'admin@dpmm.org.my',
     demoPass: 'admin123',
+    demoEmail2: 'selangor@dpmm.org.my',
+    demoPass2: 'admin123',
   },
   {
     id: 'member',
@@ -63,9 +66,14 @@ export default function LoginPage({ defaultRole = 'admin', onLoginSuccess, onBac
   };
 
   const fillDemo = () => {
-    setEmail(role.demoEmail);
-    setPassword(role.demoPass);
-    setDemoFilled(true);
+    if (demoFilled && email === role.demoEmail && role.demoEmail2) {
+      setEmail(role.demoEmail2);
+      setPassword(role.demoPass2);
+    } else {
+      setEmail(role.demoEmail);
+      setPassword(role.demoPass);
+      setDemoFilled(true);
+    }
     setError('');
   };
 
@@ -82,8 +90,18 @@ export default function LoginPage({ defaultRole = 'admin', onLoginSuccess, onBac
     setLoading(true);
     // Simulate network delay
     setTimeout(() => {
-      if (email === creds.email && password === creds.password) {
-        onLoginSuccess(activeRole);
+      let matchedCreds = null;
+      let matchedRole = null;
+      for (const [key, cred] of Object.entries(CREDENTIALS)) {
+        if (email === cred.email && password === cred.password) {
+           matchedCreds = cred;
+           matchedRole = key;
+           break;
+        }
+      }
+
+      if (matchedCreds && (matchedRole === activeRole || (activeRole.includes('admin') && matchedRole.includes('admin')))) {
+        onLoginSuccess(matchedRole, matchedCreds);
       } else {
         setError('Invalid credentials. Use the demo credentials below to sign in.');
         setLoading(false);
@@ -258,6 +276,23 @@ export default function LoginPage({ defaultRole = 'admin', onLoginSuccess, onBac
                   {role.demoPass}
                 </code>
               </div>
+              {role.demoEmail2 && (
+                <div className="mt-3 pt-3 border-t border-slate-200">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Or Use State Admin</p>
+                  <div className="flex items-center gap-3 text-xs mb-2">
+                    <span className="text-slate-500 font-bold w-16 shrink-0">Email</span>
+                    <code className="text-slate-700 font-mono bg-white border border-slate-200 shadow-sm px-2.5 py-1 rounded-md text-[11px] flex-1 truncate">
+                      {role.demoEmail2}
+                    </code>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs">
+                    <span className="text-slate-500 font-bold w-16 shrink-0">Password</span>
+                    <code className="text-slate-700 font-mono bg-white border border-slate-200 shadow-sm px-2.5 py-1 rounded-md text-[11px]">
+                      {role.demoPass2}
+                    </code>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

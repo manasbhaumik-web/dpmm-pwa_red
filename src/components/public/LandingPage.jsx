@@ -156,7 +156,7 @@ const FAQS = [
   { q: 'What payment rails are supported for renewals?', a: 'We simulate FPX internet banking via ToyyibPay/Billplz (including Maybank2u, CIMB Clicks, RHB, etc.) alongside Credit and Debit card checkouts.' }
 ];
 
-export default function LandingPage({ onRegister }) {
+export default function LandingPage({ onRegister, onLogin }) {
   const [selectedShowcaseSector, setSelectedShowcaseSector] = useState('IT Services');
   const [activeFaq, setActiveFaq] = useState(null);
 
@@ -355,8 +355,13 @@ export default function LandingPage({ onRegister }) {
                   href={`https://wa.me/${peer.phone}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={e => e.preventDefault()}
-                  className="flex items-center justify-center gap-1.5 w-full py-2 bg-[#25D366] text-white rounded-lg text-[10px] font-bold hover:opacity-95 active:scale-95 transition-all"
+                  onClick={e => {
+                    e.preventDefault();
+                    if (window.confirm("Please log in as a Member to access B2B WhatsApp matchmaking. Go to login?")) {
+                      if (onLogin) onLogin();
+                    }
+                  }}
+                  className="flex items-center justify-center gap-1.5 w-full py-2 bg-[#25D366] text-white rounded-lg text-[10px] font-bold hover:opacity-95 active:scale-95 transition-all cursor-pointer"
                 >
                   <WA_ICON /> Chat with Representative
                 </a>

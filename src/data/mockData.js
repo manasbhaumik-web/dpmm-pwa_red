@@ -61,6 +61,19 @@ export function cleansePhone(phoneStr) {
   return '+60' + digits;
 }
 
+// Helper to extract mock district and location from address
+export function extractDistrictAndLocation(address, state) {
+  const parts = address.split(',').map(s => s.trim());
+  let location = parts.length >= 2 ? parts[parts.length - 2] : state;
+  let district = state === 'Kuala Lumpur' ? 'Kuala Lumpur' : (state === 'Selangor' ? 'Petaling' : state);
+  
+  if (state === 'Selangor') {
+    if (location.includes('Kajang') || location.includes('Hulu Langat') || location.includes('Bangi')) district = 'Hulu Langat';
+    else if (location.includes('Shah Alam') || location.includes('Klang')) district = 'Klang';
+  }
+  return { location, district };
+}
+
 // Relational tables holding current database state
 class MockRelationalDb {
   constructor() {
@@ -80,6 +93,7 @@ class MockRelationalDb {
       const expDate = cleanseDate(row.expiry_date);
       const stateMatch = address.match(/(Selangor|Kuala Lumpur|Johor|Kedah|Kelantan|Melaka|Negeri Sembilan|Pahang|Perak|Perlis|Pulau Pinang|Sabah|Sarawak|Terengganu|Labuan|Putrajaya)/i);
       const mappedState = stateMatch ? stateMatch[0] : 'Selangor'; // Default to Selangor if not found
+      const { location, district } = extractDistrictAndLocation(address, mappedState);
 
       const cleansedMember = {
         member_id: memberId,
@@ -93,9 +107,15 @@ class MockRelationalDb {
         category: row.category,
         business_type: row.business_type,
         state: mappedState,
+        district: district,
+        location: location,
         status: status,
         expiry_date: expDate,
-        whatsapp_status: status === 'Active' ? 'Active' : 'Unsubscribed'
+        whatsapp_status: status === 'Active' ? 'Active' : 'Unsubscribed',
+        docs: [
+          { label: 'SSM Certificate', color: '#0ea5e9' },
+          { label: 'Identity Card (IC)', color: '#8b5cf6' },
+        ]
       };
       
       this.members.push(cleansedMember);
@@ -144,6 +164,9 @@ class MockRelationalDb {
     for (let i = 9; i <= 209; i++) {
       const memberId = `DPMM-2026-${String(i).padStart(4, '0')}`;
       const isLapsed = statuses[i % statuses.length] === 'Lapsed';
+      const addr = addresses[i % addresses.length];
+      const st = stateMapping[i % addresses.length];
+      const { location, district } = extractDistrictAndLocation(addr, st);
       
       const memberObj = {
         member_id: memberId,
@@ -153,13 +176,19 @@ class MockRelationalDb {
         email: `wakil.${i}@megagroup.com.my`,
         phone_mobile: cleansePhone(`01${i % 10}${String(1000000 + i).padStart(7, '0')}`),
         phone_office: cleansePhone(`038822${String(1000 + i).padStart(4, '0')}`),
-        address: addresses[i % addresses.length],
+        address: addr,
         category: categories[i % categories.length],
         business_type: sectors[i % sectors.length],
-        state: stateMapping[i % addresses.length],
+        state: st,
+        district: district,
+        location: location,
         status: isLapsed ? 'Lapsed' : 'Active',
         expiry_date: isLapsed ? '2025-12-31' : '2026-12-31',
-        whatsapp_status: isLapsed ? 'Unsubscribed' : 'Active'
+        whatsapp_status: isLapsed ? 'Unsubscribed' : 'Active',
+        docs: [
+          { label: 'SSM Certificate', color: '#0ea5e9' },
+          { label: 'Identity Card (IC)', color: '#8b5cf6' },
+        ]
       };
 
       this.members.push(memberObj);
@@ -300,6 +329,7 @@ class MockRelationalDb {
     }, 0);
     const newId = `DPMM-2026-${String(maxNum + 1).padStart(4, '0')}`;
     
+    const { location, district } = extractDistrictAndLocation(memberData.address || '', memberData.state || 'Selangor');
     const newMember = {
       member_id: newId,
       company_name: memberData.company_name || memberData.company,
@@ -312,6 +342,8 @@ class MockRelationalDb {
       category: memberData.category || 'Ordinary',
       business_type: memberData.business_type || memberData.type || 'Trading',
       state: memberData.state || 'Selangor',
+      district: memberData.district || district,
+      location: memberData.location || location,
       status: memberData.status || 'Active',
       expiry_date: memberData.expiry_date || '2026-12-31',
       whatsapp_status: memberData.status === 'Active' ? 'Active' : 'Unsubscribed'
@@ -405,7 +437,10 @@ export const MEMBERS = dbInstance.members.map(m => ({
   fee: m.status === 'Active' ? 100 : 0,
   year: parseInt(m.expiry_date.split('-')[0]) || 2026,
   contact: m.contact_person,
-  phone: m.phone_mobile.replace('+', '')
+  phone: m.phone_mobile.replace('+', ''),
+  state: m.state,
+  district: m.district,
+  location: m.location
 }));
 
 export const PENDING_APPLICANTS = dbInstance.pendingQueue;
